@@ -1,0 +1,8 @@
+[10-Jun-2024 03:43:50 Europe/Berlin] PHP Fatal error:  Cannot declare class provider, because the name is already in use in C:\xampp\htdocs\LashBrowDreams\controllers\ProductController.php on line 2
+[10-Jun-2024 03:43:50 Europe/Berlin] PHP Stack trace:
+[10-Jun-2024 03:43:50 Europe/Berlin] PHP   1. {main}() C:\xampp\htdocs\LashBrowDreams\index.php:0
+[10-Jun-2024 03:43:50 Europe/Berlin] PHP   2. require_once() C:\xampp\htdocs\LashBrowDreams\index.php:22
+[10-Jun-2024 03:44:25 Europe/Berlin] PHP Fatal error:  Cannot declare class provider, because the name is already in use in C:\xampp\htdocs\LashBrowDreams\controllers\ProductController.php on line 2
+[10-Jun-2024 03:44:25 Europe/Berlin] PHP Stack trace:
+[10-Jun-2024 03:44:25 Europe/Berlin] PHP   1. {main}() C:\xampp\htdocs\LashBrowDreams\index.php:0
+[10-Jun-2024 03:44:25 Europe/Berlin] PHP   2. require_once() C:\xampp\htdocs\LashBrowDreams\index.php:22
