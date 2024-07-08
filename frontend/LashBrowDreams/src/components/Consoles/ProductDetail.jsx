@@ -8,7 +8,7 @@ import ProductService from '../../services/ProductService';
 
 export function ProductDetails() {
   const routeParams= useParams();
-  console.log(routeParams)
+  //console.log(routeParams)
 
    //Resultado de consumo del API, respuesta
  const[data,setData]=useState(null);
@@ -17,7 +17,9 @@ export function ProductDetails() {
  //Booleano para establecer sí se ha recibido respuesta
  const[loaded,setLoaded]=useState(false);
    useEffect(()=>{
-  
+
+
+   
     ProductService.getProductById(routeParams.id)
     .then( response=>{
       setData(response.data.results)
@@ -33,46 +35,40 @@ export function ProductDetails() {
     )
   },[routeParams.id]) 
 
+  console.log(data)
   if(!loaded) return <p>Cargando...</p>
   if(error) return <p>Error: {error.message}</p>
   return (
     <Container component='main' sx={{ mt: 8, mb: 2 }} >
       {data && ( 
-        <Grid container spacing={2}>
-          
-          <Grid item={true} xs={5} >  
-          <Box component='img'
-           sx={{
-            borderRadius:'4%',
-            maxWidth:'100%',
-            height: 'auto',
-          }}
-          /> 
-            
-          </Grid>
-          <Grid item={true} xs={7}>            
+        
+        <Grid container spacing={2}
+        sx={{ boxShadow: 3, borderRadius: 2, p: 2, backgroundColor: 'background.paper' }}>
+          <Grid item={true} xs={7}>  
+                      
               <Typography variant='h4' component='h1' gutterBottom>
-               {data.results.product_name}
+                
+               {data.product_name}
               </Typography>
               <Typography variant='subtitle1' component='h1' gutterBottom>
-               {data.results.description}
+               {data.description}
               </Typography>
               <Typography component='span' variant='subtitle1' display='block'>
                 <Box fontWeight='bold' display='inline'>
-                  Precio: {data.results.price}
-                </Box>{' '}
-                 Colones
+                  Precio:  
+                </Box>{' '} {data.price} {' '}
+                  Colones
               </Typography>
               <Typography component='span' variant='subtitle1' display='block'>
                 <Box fontWeight='bold' display='inline'>
-                  Codigo:
-                </Box>{' '} {data.results.usage}
+                  Cantidad de usos:
+                </Box>{' '} {data.usage}
                 
               </Typography>
               <Typography component='span' variant='subtitle1' display='block'>
                 <Box fontWeight='bold' display='inline'>
-                  Año de creacion:
-                </Box>{' '} {data.results.brand}
+                  Marca:
+                </Box>{' '} {data.brand}
                 
               </Typography>
               

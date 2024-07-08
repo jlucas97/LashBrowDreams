@@ -20,8 +20,8 @@ class ProductService {
   getProductById(id) {
     return axios.get(BASE_URL + '/' + id)
       .then(response => {
-        console.log("Detalle de productos:", response);
-        return response.data;
+        //console.log("Detalle de productos:", response);
+        return response;
       })
       .catch(error => {
         console.error("Error al obtener el producto:", error);

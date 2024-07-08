@@ -15,11 +15,13 @@ require_once "models/CategoryModel.php";
 require_once "models/SubCategoryModel.php";
 require_once "models/ProviderModel.php";
 require_once "models/ProductModel.php";
+require_once "models/InvoiceModel.php";
 /***--- Add all controllers*/
 require_once "controllers/CategoryController.php";
 require_once "controllers/SubCategoryController.php";
 require_once "controllers/ProviderController.php";
 require_once "controllers/ProductController.php";
+require_once "controllers/InvoiceController.php";
 //Routes
 require_once "controllers/RoutesController.php";
 $index = new RoutesController();

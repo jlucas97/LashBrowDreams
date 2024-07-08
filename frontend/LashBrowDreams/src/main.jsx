@@ -7,6 +7,8 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import {Home} from "./components/Home/home.jsx";
 import { ProductList } from "./components/Consoles/ProductList.jsx";
 import { ProductDetails } from "./components/Consoles/ProductDetail.jsx";
+import {InvoiceList} from "./components/Consoles/InvoiceList.jsx";
+import InvoiceDetail from "./components/Consoles/InvoiceDetail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
         path: "product/:id",
         element: <ProductDetails />,
       },
+      {
+        path: "billing",
+        element: <InvoiceList/>
+      },
+      {
+        path: "billing/:id",
+        element: <InvoiceDetail/>
+      }
     ]
   },
 ]);

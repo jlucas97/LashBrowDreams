@@ -14,8 +14,13 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
 
-const pages = ["Productos", "Facturación", "Reservas"];
+const pages = ["Productos","Reservas", "Facturación"];
 const settings = ["Perfil", "Cuenta", "Cerrar Sesión"];
+const routes = {
+  "Productos": "/product",
+  "Reservas": "/reservation",
+  "Facturación": "/billing"
+};
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -52,8 +57,8 @@ function ResponsiveAppBar() {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            component= {Link} to="/"
+            href=""
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -141,9 +146,10 @@ function ResponsiveAppBar() {
                   },
                 }}
                 component={Link}
-                to="/product"
+                to={routes[page]}
                 color="secondary"
               >
+                
                 {page}
               </Button>
             ))}
