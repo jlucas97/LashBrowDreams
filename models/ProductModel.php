@@ -19,7 +19,7 @@ class ProductModel
     {
         try {
             //SQL Query
-            $vSQL = "SELECT * from product order by id desc";
+            $vSQL = "SELECT * from product order by price";
             //Query execution
             $vResult = $this->link->executeSQL($vSQL);
 

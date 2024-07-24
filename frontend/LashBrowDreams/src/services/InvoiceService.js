@@ -7,7 +7,7 @@ class InvoiceService {
   getInvoiceList() {
     return axios.get(BASE_URL)
       .then(response => {
-        //console.log("Lista de facturas:", response.data);
+        console.log("Lista de facturas:", response.data);
         return response.data;
       })
       .catch(error => {

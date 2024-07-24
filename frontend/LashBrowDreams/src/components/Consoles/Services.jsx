@@ -15,12 +15,15 @@ import {
 } from "@mui/material";
 import ServiceServices from "../../services/ServiceService";
 import CategoryService from "../../services/CategoryService";
+import TypeService from "../../services/TypeService";
 
 export function ServiceList() {
   const [services, setServices] = useState([]);
   const [selectedServiceId, setSelectedServiceId] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [types, setTypes] = useState([]);
+  const [selectedTypeId, setSelectedTypeId] = useState("");
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -69,15 +72,37 @@ export function ServiceList() {
       });
   }, []);
 
+  useEffect(()=>{
+    TypeService.getTypes()
+    .then((response) =>{
+      console.log("Lista de tipos:",response);
+      const mappedTypes = response.results.map((type) => ({
+        id: type.id,
+        name: type.name
+      }));
+      setTypes(mappedTypes);
+    })
+    .catch((error) => {
+      console.error("Error al obtener los tipos:", error);
+    });
+  })
+
   const handleServiceChange = (event) => {
     const serviceId = event.target.value;
     setSelectedServiceId(serviceId);
     const selectedService = services.find((service) => service.id === serviceId);
-    setFormData({
-      ...selectedService,
-      category: selectedService.Categoria,
-    });
-    setSelectedCategoryId(selectedService.Categoria);
+    if (selectedService) {
+      setFormData({
+        id: selectedService.id,
+        name: selectedService.name,
+        description: selectedService.description,
+        price: selectedService.price,
+        duration: selectedService.duration,
+        category: selectedService.category,
+        type: selectedService.type
+      });
+      setSelectedCategoryId(selectedService.category);
+    }
   };
 
   const handleCategoryChange = (event) => {
@@ -89,6 +114,14 @@ export function ServiceList() {
     }));
   };
 
+  const handleTypeChange = (event) => {
+    const typeId = event.target.value;
+    setSelectedTypeId(typeId);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      type: typeId,
+    }));
+  }
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -212,20 +245,41 @@ export function ServiceList() {
               <FormControl fullWidth margin="normal">
                 <InputLabel>Categoría</InputLabel>
                 <Select
-                  value={selectedCategoryId}
+                  value={formData.category}
                   onChange={handleCategoryChange}
                   label="Seleccionar Categoría"
                   required
                 >
                   {categories.length > 0 ? (
                     categories.map((category) => (
-                      <MenuItem key={category.id} value={category.id}>
+                      <MenuItem key={category.id} value={category.name}>
                         {category.name}
                       </MenuItem>
                     ))
                   ) : (
                     <MenuItem value="" disabled>
                       No hay categorías disponibles
+                    </MenuItem>
+                  )}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Tipo</InputLabel>
+                <Select
+                  value={formData.type}
+                  onChange={handleTypeChange}
+                  label="Seleccionar Tipo de Servicio"
+                  required
+                >
+                  {types.length > 0 ? (
+                    types.map((type) => (
+                      <MenuItem key={type.id} value={type.name}>
+                        {type.name}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="" disabled>
+                      No hay tipos disponibles
                     </MenuItem>
                   )}
                 </Select>

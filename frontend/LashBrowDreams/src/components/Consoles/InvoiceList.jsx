@@ -3,8 +3,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InvoiceService from "../../services/InvoiceService";
-import moment from "moment";
+import Button from "@mui/material/Button";
+//import moment from "moment";
 import { appTheme } from "../../themes/theme";
+import ReportePastel from "./GraphicPie";
 
 /*const formatDate = (dateString) => {
   return moment(dateString).format("Do MMMM YYYY");
@@ -27,6 +29,7 @@ export function InvoiceList() {
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [selectionModel, setSelectionModel] = useState([]);
+  const [showReporte, setShowReporte] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,52 +46,63 @@ export function InvoiceList() {
       });
   }, []);
 
+  const handleShowReporte = () => {
+    setShowReporte(!showReporte);
+  };
+
   if (!loaded) return <p>Cargando...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={data}
-        columns={columns}
-        getRowId={(row) => row.ID_Factura}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        onRowClick={(params) => {
-          setSelectionModel([params.id]);
-          navigate(`/billing/${params.id}`);
-        }}
-        disableRowSelectionOnClick
-        sx={{
-          '& .MuiDataGrid-root': {
-            backgroundColor: appTheme.palette.background.main,
-            borderColor: appTheme.palette.primary.dark,
-          },
-          '& .MuiDataGrid-cell': {
-            borderBottom: `1px solid ${appTheme.palette.primary.main}`,
-          },
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: appTheme.palette.primary.main,
-            color: appTheme.palette.primary.contrastText,
-            fontSize: 16,
-          },
-          '& .MuiDataGrid-row:hover': {
-            backgroundColor: appTheme.palette.primary.dark,
-            color: appTheme.palette.primary.contrastText,
-          },
-          '& .Mui-selected': {
-            backgroundColor: appTheme.palette.primary.main,
-            color: appTheme.palette.primary.contrastText,
-            '&:hover': {
-              backgroundColor: appTheme.palette.primary.dark,
+    <>
+      <div style={{ height: 400, width: "100%" }}>
+        <DataGrid
+          rows={data}
+          columns={columns}
+          getRowId={(row) => row.ID_Factura}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 5 },
             },
-          },
-        }}
-      />
-    </div>
+          }}
+          pageSizeOptions={[5, 10]}
+          onRowClick={(params) => {
+            setSelectionModel([params.id]);
+            navigate(`/billing/${params.id}`);
+          }}
+          disableRowSelectionOnClick
+          sx={{
+            "& .MuiDataGrid-root": {
+              backgroundColor: appTheme.palette.background.main,
+              borderColor: appTheme.palette.primary.dark,
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: `1px solid ${appTheme.palette.primary.main}`,
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: appTheme.palette.primary.main,
+              color: appTheme.palette.primary.contrastText,
+              fontSize: 16,
+            },
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: appTheme.palette.primary.dark,
+              color: appTheme.palette.primary.contrastText,
+            },
+            "& .Mui-selected": {
+              backgroundColor: appTheme.palette.primary.main,
+              color: appTheme.palette.primary.contrastText,
+              "&:hover": {
+                backgroundColor: appTheme.palette.primary.dark,
+              },
+            },
+          }}
+        />
+      </div>
+      <Button variant="contained" onClick={handleShowReporte} style={{ margin: "20px" }}>
+        {showReporte ? "Ocultar Reporte" : "Mostrar Reporte por precios"}
+      </Button>
+
+      {showReporte && <ReportePastel />}
+    </>
   );
 }

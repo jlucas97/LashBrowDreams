@@ -10,11 +10,13 @@ import { Link } from "react-router-dom";
 import { DateRange, Info, ModelTrainingOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import ProductService from "../../services/ProductService.js";
+import GraphicBars from "./GraphicBars.jsx";
 
 export function ProductList() {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [showReporte, setShowReporte] = useState(false);
 
   useEffect(() => {
     ProductService.getProducts()
@@ -30,52 +32,63 @@ export function ProductList() {
       });
   }, []);
 
+  const handleShowReporte = () => {
+    setShowReporte(!showReporte);
+  };
+
   if (!loaded) return <p>Cargando...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <Grid container sx={{ p: 2 }} spacing={3}>
-      {data &&
-        data.map((item) => (
-          <Grid item xs={4} key={item.id}>
-            <Card>
-              <CardHeader
-                sx={{
-                  p: 0,
-                  backgroundColor: (theme) => theme.palette.secondary.main,
-                  color: (theme) => theme.palette.common.white,
-                }}
-                style={{ textAlign: "center" }}
-                title={item.name}
-                subheader={item.model}
-              />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  <ModelTrainingOutlined /> Descripción: {item.description}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <DateRange /> Precio: {item.price}
-                </Typography>
-              </CardContent>
-              <CardActions
-                disableSpacing
-                sx={{
-                  backgroundColor: (theme) => theme.palette.action.focus,
-                  color: (theme) => theme.palette.common.white,
-                }}
-              >
-                <IconButton
-                  component={Link}
-                  to={`/product/${item.id}`}
-                  aria-label="Detalle"
-                  sx={{ ml: "auto" }}
+    <>
+      <Grid container sx={{ p: 2 }} spacing={3}>
+        {data &&
+          data.map((item) => (
+            <Grid item xs={4} key={item.id}>
+              <Card>
+                <CardHeader
+                  sx={{
+                    p: 0,
+                    backgroundColor: (theme) => theme.palette.secondary.main,
+                    color: (theme) => theme.palette.common.white,
+                  }}
+                  style={{ textAlign: "center" }}
+                  title={item.name}
+                  subheader={item.model}
+                />
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    <ModelTrainingOutlined /> Descripción: {item.description}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    <DateRange /> Precio: {item.price}
+                  </Typography>
+                </CardContent>
+                <CardActions
+                  disableSpacing
+                  sx={{
+                    backgroundColor: (theme) => theme.palette.action.focus,
+                    color: (theme) => theme.palette.common.white,
+                  }}
                 >
-                  <Info />
-                </IconButton>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-    </Grid>
+                  <IconButton
+                    component={Link}
+                    to={`/product/${item.id}`}
+                    aria-label="Detalle"
+                    sx={{ ml: "auto" }}
+                  >
+                    <Info />
+                  </IconButton>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+      </Grid>
+      <Button variant="contained" onClick={handleShowReporte}>
+        {showReporte ? "Ocultar Reporte" : "Mostrar Reporte por precios"}
+      </Button>
+
+      {showReporte && <GraphicBars />}
+    </>
   );
 }

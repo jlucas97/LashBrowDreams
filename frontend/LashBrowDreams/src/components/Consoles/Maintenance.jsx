@@ -26,7 +26,7 @@ export function Maintenance() {
     },
     {
       id: 4,
-      title: "Mantenimiento horario"
+      title: "Mantenimiento Horario"
     }
   ];
 
