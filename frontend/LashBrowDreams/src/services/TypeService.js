@@ -6,7 +6,6 @@ class TypeService {
 
     // Obtener todos los productos
     getTypes() {
-        console.log('URL-> ' + BASE_URL);
         return axios.get(BASE_URL)
             .then(response => {
                 //console.log("Lista de servicios:", response);

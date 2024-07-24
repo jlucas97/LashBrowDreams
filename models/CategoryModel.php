@@ -24,4 +24,17 @@ class CategoryModel
             die("" . $e->getMessage());
         }
     }
+
+    public function getCategoryById($id)
+    {
+        try {
+            //SQL Query
+            $vSQL = "SELECT * FROM Category Where id = $id order by id desc";
+            $vResult = $this->link->executeSQL($vSQL);
+
+            return $vResult;
+        } catch (Exception $e) {
+            die("" . $e->getMessage());
+        }
+    }
 }

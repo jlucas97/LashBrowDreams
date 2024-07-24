@@ -13,6 +13,7 @@ export function Maintenance() {
     {
       id: 1,
       title: "Mantenimiento Productos",
+      form: "product"
     },
     {
       id: 2,

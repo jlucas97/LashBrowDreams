@@ -12,48 +12,52 @@ import {
   InputLabel,
   Box,
   Typography,
+  duration,
 } from "@mui/material";
-import ServiceServices from "../../services/ServiceService";
+import ProductServices from "../../services/ProductService";
 import CategoryService from "../../services/CategoryService";
-import TypeService from "../../services/TypeService";
+import SubCategoryService from "../../services/SubCategoryService";
 
-export function ServiceList() {
-  const [services, setServices] = useState([]);
-  const [selectedServiceId, setSelectedServiceId] = useState("");
+export function ProductMaintenance() {
+  const [products, setProducts] = useState([]);
+  const [selectedProductId, setSelectedProductId] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
-  const [types, setTypes] = useState([]);
-  const [selectedTypeId, setSelectedTypeId] = useState("");
+  const [subcategories, setSubCategories] = useState([]);
+  const [selectedSubCategoryId, setSelectedSubCategoryId] = useState("");
   const [formData, setFormData] = useState({
     id: "",
     name: "",
     description: "",
-    price: "",
-    duration: "",
     category: "",
-    type: ""
+    subcategory: "",
+    price: "",
+    brand: "",
+    usage: "",
   });
+
 
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [updateError, setUpdateError] = useState("");
 
   useEffect(() => {
-    ServiceServices.getServices()
+    ProductServices.getProducts()
       .then((response) => {
-        console.log("Lista de servicios:", response);
-        const mappedServices = response.results.map((service) => ({
-          id: service.id,
-          name: service.Nombre,
-          description: service.Descripcion || "",
-          price: service.Precio,
-          duration: service.Duracion,
-          category: service.Categoria,
-          type: service.Tipo || "",
+        console.log("Lista de productos:", response);
+        const mappedProducts = response.results.map((product) => ({
+          id: product.id,
+          name: product.name,
+          description: product.description || "",
+          category: product.category,
+          subcategory: product.subcategory,
+          price: product.price,
+          brand: product.brand,
+          usage: product.usage,
         }));
-        setServices(mappedServices);
+        setProducts(mappedProducts);
       })
       .catch((error) => {
-        console.error("Error al obtener los servicios:", error);
+        console.error("Error al obtener los productos:", error);
       });
   }, []);
 
@@ -63,7 +67,7 @@ export function ServiceList() {
         console.log("Lista de categorías:", response);
         const mappedCategories = response.results.map((category) => ({
           id: category.id,
-          name: category.name
+          name: category.name,
         }));
         setCategories(mappedCategories);
       })
@@ -72,41 +76,45 @@ export function ServiceList() {
       });
   }, []);
 
-  useEffect(()=>{
-    TypeService.getTypes()
-    .then((response) =>{
-      console.log("Lista de tipos:",response);
-      const mappedTypes = response.results.map((type) => ({
-        id: type.id,
-        name: type.name
-      }));
-      setTypes(mappedTypes);
-    })
-    .catch((error) => {
-      console.error("Error al obtener los tipos:", error);
-    });
-  })
-
-  const handleServiceChange = (event) => {
-    const serviceId = event.target.value;
-    setSelectedServiceId(serviceId);
-    const selectedService = services.find((service) => service.id === serviceId);
-    if (selectedService) {
-      setFormData({
-        id: selectedService.id,
-        name: selectedService.name,
-        description: selectedService.description,
-        price: selectedService.price,
-        duration: selectedService.duration,
-        category: selectedService.category,
-        type: selectedService.type
+  console.log("num",selectedCategoryId);
+  useEffect(() => {
+    SubCategoryService.getSubCategoryByCategoryId(selectedCategoryId)
+      .then((response) => {
+        console.log("Lista de subcategorías:", response);
+        const mappedSubCategories = response.results.map((subcategory) => ({
+          id: subcategory.id,
+          name: subcategory.name,
+        }));
+        setSubCategories(mappedSubCategories);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las subcategorías:", error);
       });
-      setSelectedCategoryId(selectedService.category);
+  }, []);
+
+
+  const handleProductChange = (event) => {
+    const productId = event.target.value;
+    setSelectedProductId(productId);
+    const selectedProduct = products.find(
+      (product) => product.id === productId
+    );
+    if (selectedProduct) {
+      setFormData({
+        id: selectedProduct.id,
+        name: selectedProduct.name,
+        description: selectedProduct.description,
+        category: selectedProduct.category,
+        subcategory: selectedProduct.subcategory,
+        price: selectedProduct.price,
+        brand: selectedProduct.brand,
+        usage: selectedProduct.usage,
+      });
     }
   };
 
   const handleCategoryChange = (event) => {
-    const categoryId = event.target.value;
+    const categoryId = Number(event.target.value);
     setSelectedCategoryId(categoryId);
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -114,14 +122,15 @@ export function ServiceList() {
     }));
   };
 
-  const handleTypeChange = (event) => {
-    const typeId = event.target.value;
-    setSelectedTypeId(typeId);
+  const handleSubCategoryChange = (event) => {
+    const subCategoryId = event.target.value;
+    setSelectedSubCategoryId(subCategoryId);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      type: typeId,
+      subcategory: subCategoryId,
     }));
-  }
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -133,7 +142,7 @@ export function ServiceList() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    ServiceServices.updateService(formData)
+    ProductService.updateProduct(formData)
       .then((response) => {
         console.log("test");
         setUpdateSuccess(true);
@@ -142,7 +151,9 @@ export function ServiceList() {
       .catch((error) => {
         console.error(error);
         setUpdateSuccess(false);
-        setUpdateError("Error al actualizar el servicio. Por favor, inténtelo de nuevo.");
+        setUpdateError(
+          "Error al actualizar el producto. Por favor, inténtelo de nuevo."
+        );
       });
   };
 
@@ -150,11 +161,11 @@ export function ServiceList() {
     <Grid container spacing={3} justifyContent="center" marginTop={12}>
       <Grid item xs={12} sm={8} md={6}>
         <Card>
-          <CardHeader title="Mantenimiento de Servicios" />
+          <CardHeader title="Mantenimiento de Productos" />
           <CardContent>
             {updateSuccess && (
               <Typography variant="body1" color="primary" gutterBottom>
-                ¡Servicio actualizado con éxito!
+                ¡Producto actualizado con éxito!
               </Typography>
             )}
             {updateError && (
@@ -164,22 +175,22 @@ export function ServiceList() {
             )}
             <form onSubmit={handleSubmit}>
               <FormControl fullWidth margin="normal">
-                <InputLabel>Seleccionar Servicio</InputLabel>
+                <InputLabel>Seleccionar Producto</InputLabel>
                 <Select
-                  value={selectedServiceId}
-                  onChange={handleServiceChange}
-                  label="Seleccionar Servicio"
+                  value={selectedProductId}
+                  onChange={handleProductChange}
+                  label="Seleccionar Producto"
                   required
                 >
-                  {services.length > 0 ? (
-                    services.map((service) => (
-                      <MenuItem key={service.id} value={service.id}>
-                        {service.name}
+                  {products.length > 0 ? (
+                    products.map((product) => (
+                      <MenuItem key={product.id} value={product.id}>
+                        {product.name}
                       </MenuItem>
                     ))
                   ) : (
                     <MenuItem value="" disabled>
-                      No hay servicios disponibles
+                      No hay productos disponibles
                     </MenuItem>
                   )}
                 </Select>
@@ -216,6 +227,48 @@ export function ServiceList() {
                 value={formData.description}
                 onChange={handleChange}
               />
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Categoría</InputLabel>
+                <Select
+                  value={formData.category}
+                  onChange={handleCategoryChange}
+                  label="Seleccionar Categoría"
+                  required
+                >
+                  {categories.length > 0 ? (
+                    categories.map((category) => (
+                      <MenuItem key={category.id} value={category.id}>
+                        {category.name}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="" disabled>
+                      No hay categorías disponibles
+                    </MenuItem>
+                  )}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Subcategoría</InputLabel>
+                <Select
+                  value={formData.subcategory}
+                  onChange={handleSubCategoryChange}
+                  label="Seleccionar Subcategoría"
+                  required
+                >
+                  {subcategories.length > 0 ? (
+                    subcategories.map((subcategory) => (
+                      <MenuItem key={subcategory.id} value={subcategory.id}>
+                        {subcategory.name}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="" disabled>
+                      No hay subcategorías disponibles
+                    </MenuItem>
+                  )}
+                </Select>
+              </FormControl>
               <TextField
                 name="price"
                 label="Precio"
@@ -242,48 +295,19 @@ export function ServiceList() {
                   min: "0",
                 }}
               />
-              <FormControl fullWidth margin="normal">
-                <InputLabel>Categoría</InputLabel>
-                <Select
-                  value={formData.category}
-                  onChange={handleCategoryChange}
-                  label="Seleccionar Categoría"
-                  required
-                >
-                  {categories.length > 0 ? (
-                    categories.map((category) => (
-                      <MenuItem key={category.id} value={category.name}>
-                        {category.name}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <MenuItem value="" disabled>
-                      No hay categorías disponibles
-                    </MenuItem>
-                  )}
-                </Select>
-              </FormControl>
-              <FormControl fullWidth margin="normal">
-                <InputLabel>Tipo</InputLabel>
-                <Select
-                  value={formData.type}
-                  onChange={handleTypeChange}
-                  label="Seleccionar Tipo de Servicio"
-                  required
-                >
-                  {types.length > 0 ? (
-                    types.map((type) => (
-                      <MenuItem key={type.id} value={type.name}>
-                        {type.name}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <MenuItem value="" disabled>
-                      No hay tipos disponibles
-                    </MenuItem>
-                  )}
-                </Select>
-              </FormControl>
+              
+              
+              <TextField
+                name="type"
+                label="Tipo"
+                fullWidth
+                required
+                margin="normal"
+                value={formData.type}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
               <Box mt={3}>
                 <Button
                   type="submit"
@@ -291,7 +315,7 @@ export function ServiceList() {
                   color="primary"
                   fullWidth
                 >
-                  Crear / Actualizar producto
+                  Crear / Actualizar servicio
                 </Button>
               </Box>
             </form>

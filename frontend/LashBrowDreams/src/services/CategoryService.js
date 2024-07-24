@@ -17,6 +17,18 @@ class CategoryService {
                 throw error;
             });
     }
+
+    getCategoryById(id){
+        return axios.get(`${BASE_URL}/id`)
+            .then(response => {
+                //console.log("Lista de servicios:", response);
+                return response.data;
+            })
+            .catch(error => {
+                console.error("Error al obtener las categorías:", error);
+                throw error;
+            });
+    }
 }
 
 export default new CategoryService();

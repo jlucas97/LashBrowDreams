@@ -19,7 +19,10 @@ class ProductModel
     {
         try {
             //SQL Query
-            $vSQL = "SELECT * from product order by price";
+            $vSQL = "select p.id, p.name, p.description, c.name as category, s.name as subcategory, p.usage, p.brand, p.price 
+                    from product as p
+                    inner join category as c on categoryId = c.id
+                    inner join subcategory as s on subCategoryId = s.id";
             //Query execution
             $vResult = $this->link->executeSQL($vSQL);
 

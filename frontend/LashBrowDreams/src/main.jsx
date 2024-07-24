@@ -11,6 +11,7 @@ import {InvoiceList} from "./components/Consoles/InvoiceList.jsx";
 import InvoiceDetail from "./components/Consoles/InvoiceDetail.jsx";
 import {ServiceList} from "./components/Consoles/Services.jsx";
 import { Maintenance } from "./components/Consoles/Maintenance.jsx";
+import { ProductMaintenance } from "./components/Consoles/ProductMaintenance.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "maintenance/service",
         element: <ServiceList/>
+      },
+      {
+        path: "maintenance/product",
+        element: <ProductMaintenance/>
       }
     ]
   },
