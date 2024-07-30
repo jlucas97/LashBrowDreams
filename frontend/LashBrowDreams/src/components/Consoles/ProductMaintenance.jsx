@@ -23,8 +23,10 @@ export function ProductMaintenance() {
   const [selectedProductId, setSelectedProductId] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [selectedCategoryName, setSelectedCategoryName] = useState("");
   const [subcategories, setSubCategories] = useState([]);
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState("");
+  const [selectedSubCategoryName, setSelectedSubCategoryName] = useState("");
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -35,7 +37,6 @@ export function ProductMaintenance() {
     brand: "",
     usage: "",
   });
-
 
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [updateError, setUpdateError] = useState("");
@@ -74,10 +75,6 @@ export function ProductMaintenance() {
       .catch((error) => {
         console.error("Error al obtener las categorías:", error);
       });
-  }, []);
-
-  console.log("num",selectedCategoryId);
-  useEffect(() => {
     SubCategoryService.getSubCategoryByCategoryId(selectedCategoryId)
       .then((response) => {
         console.log("Lista de subcategorías:", response);
@@ -92,6 +89,10 @@ export function ProductMaintenance() {
       });
   }, []);
 
+  console.log("num", selectedCategoryId);
+  useEffect(() => {
+    console.log("a");
+  }, []);
 
   const handleProductChange = (event) => {
     const productId = event.target.value;
@@ -114,16 +115,20 @@ export function ProductMaintenance() {
   };
 
   const handleCategoryChange = (event) => {
-    const categoryId = Number(event.target.value);
+    const categoryName = event.target.value;
+    const categoryId = event.target.key;
+    console.log("name",categoryName);
+    console.log("id",categoryId);
+    setSelectedCategoryName(categoryName);
     setSelectedCategoryId(categoryId);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      category: categoryId,
+      category: categoryName,
     }));
   };
 
   const handleSubCategoryChange = (event) => {
-    const subCategoryId = event.target.value;
+    const subCategoryId = event.target.key;
     setSelectedSubCategoryId(subCategoryId);
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -237,7 +242,7 @@ export function ProductMaintenance() {
                 >
                   {categories.length > 0 ? (
                     categories.map((category) => (
-                      <MenuItem key={category.id} value={category.id}>
+                      <MenuItem key={category.id} value={category.name}>
                         {category.name}
                       </MenuItem>
                     ))
@@ -258,7 +263,7 @@ export function ProductMaintenance() {
                 >
                   {subcategories.length > 0 ? (
                     subcategories.map((subcategory) => (
-                      <MenuItem key={subcategory.id} value={subcategory.id}>
+                      <MenuItem key={subcategory.id} value={subcategory.name}>
                         {subcategory.name}
                       </MenuItem>
                     ))
@@ -295,8 +300,7 @@ export function ProductMaintenance() {
                   min: "0",
                 }}
               />
-              
-              
+
               <TextField
                 name="type"
                 label="Tipo"
