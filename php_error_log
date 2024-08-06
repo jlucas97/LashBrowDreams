@@ -6,3 +6,18 @@
 [10-Jun-2024 03:44:25 Europe/Berlin] PHP Stack trace:
 [10-Jun-2024 03:44:25 Europe/Berlin] PHP   1. {main}() C:\xampp\htdocs\LashBrowDreams\index.php:0
 [10-Jun-2024 03:44:25 Europe/Berlin] PHP   2. require_once() C:\xampp\htdocs\LashBrowDreams\index.php:22
+[06-Aug-2024 05:41:39 Europe/Berlin] PHP Warning:  Undefined array key 5 in C:\xampp\htdocs\LashBrowDreams\routes\routes.php on line 73
+[06-Aug-2024 05:41:39 Europe/Berlin] PHP Stack trace:
+[06-Aug-2024 05:41:39 Europe/Berlin] PHP   1. {main}() C:\xampp\htdocs\LashBrowDreams\index.php:0
+[06-Aug-2024 05:41:39 Europe/Berlin] PHP   2. RoutesController->index() C:\xampp\htdocs\LashBrowDreams\index.php:37
+[06-Aug-2024 05:41:39 Europe/Berlin] PHP   3. include() C:\xampp\htdocs\LashBrowDreams\controllers\RoutesController.php:6
+[06-Aug-2024 05:50:01 Europe/Berlin] PHP Warning:  Undefined array key 6 in C:\xampp\htdocs\LashBrowDreams\routes\routes.php on line 73
+[06-Aug-2024 05:50:01 Europe/Berlin] PHP Stack trace:
+[06-Aug-2024 05:50:01 Europe/Berlin] PHP   1. {main}() C:\xampp\htdocs\LashBrowDreams\index.php:0
+[06-Aug-2024 05:50:01 Europe/Berlin] PHP   2. RoutesController->index() C:\xampp\htdocs\LashBrowDreams\index.php:37
+[06-Aug-2024 05:50:01 Europe/Berlin] PHP   3. include() C:\xampp\htdocs\LashBrowDreams\controllers\RoutesController.php:6
+[06-Aug-2024 07:42:51 Europe/Berlin] PHP Warning:  Undefined array key 6 in C:\xampp\htdocs\LashBrowDreams\routes\routes.php on line 81
+[06-Aug-2024 07:42:51 Europe/Berlin] PHP Stack trace:
+[06-Aug-2024 07:42:51 Europe/Berlin] PHP   1. {main}() C:\xampp\htdocs\LashBrowDreams\index.php:0
+[06-Aug-2024 07:42:51 Europe/Berlin] PHP   2. RoutesController->index() C:\xampp\htdocs\LashBrowDreams\index.php:37
+[06-Aug-2024 07:42:51 Europe/Berlin] PHP   3. include() C:\xampp\htdocs\LashBrowDreams\controllers\RoutesController.php:6

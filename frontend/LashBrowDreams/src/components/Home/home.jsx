@@ -5,8 +5,11 @@ import StoreServices from "../../services/StoreServices";
 import { useEffect, useState } from "react";
 
 export function Home() {
+  const defaultStoreId = 1;
   const [stores, setStores] = useState([]);
-  const [selectedStoreId, setSelectedStoreId] = useState("");
+  const [selectedStoreId, setSelectedStoreId] = useState(
+    localStorage.getItem("selectedStoreId") || defaultStoreId
+  );
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -24,15 +27,31 @@ export function Home() {
           city: store.city,
         }));
         setStores(mappedStores);
+
+        //Logic for localStorage
+
+        const initialStoreId = selectedStoreId || defaultStoreId;
+        const selectedStore = mappedStores.find(
+          (store) => store.id === initialStoreId
+        );
+        if (selectedStore) {
+          setFormData({
+            id: selectedStore.id,
+            name: selectedStore.name,
+            city: selectedStore.city,
+          });
+          fetchWeatherData(selectedStore.city);
+        }
       })
       .catch((error) => {
         console.error("Error al obtener las sucursales:", error);
       });
-  }, []);
+  }, [selectedStoreId]);
 
   const handleServiceChange = (event) => {
     const storeId = event.target.value;
     setSelectedStoreId(storeId);
+    localStorage.setItem("selectedStoreId", storeId);
     const selectedStore = stores.find((store) => store.id === storeId);
     if (selectedStore) {
       setFormData({
@@ -100,7 +119,6 @@ export function Home() {
         </Select>
       </FormControl>
       <Container sx={{ mt: 2 }}>
-        
         {weatherData ? (
           <Box
             display="flex"
@@ -114,7 +132,8 @@ export function Home() {
           >
             <Typography variant="h6">Clima actual de la sucursal:</Typography>
             <Typography>
-              {weatherData.name}: {weatherData.main.temp}°C, {weatherData.weather[0].description}
+              {weatherData.name}: {weatherData.main.temp}°C,{" "}
+              {weatherData.weather[0].description}
             </Typography>
             <Box
               component="img"

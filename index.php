@@ -18,6 +18,7 @@ require_once "models/ProductModel.php";
 require_once "models/TypeModel.php";
 require_once "models/ServiceModel.php";
 require_once "models/StoreModel.php";
+require_once "models/ReservationModel.php";
 require_once "models/InvoiceModel.php";
 /***--- Add all controllers*/
 require_once "controllers/CategoryController.php";
@@ -27,6 +28,7 @@ require_once "controllers/ProductController.php";
 require_once "controllers/TypeController.php";
 require_once "controllers/ServiceController.php";
 require_once "controllers/StoreController.php";
+require_once "controllers/ReservationController.php";
 require_once "controllers/InvoiceController.php";
 
 //Routes
