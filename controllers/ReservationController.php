@@ -1,49 +1,31 @@
 <?php
 
-class reservation
-{
-    //Get all Categories
-    public function index($id)
-    {
-        //Category instance
-        $reservationM = new ReservationModel;
-        //Model method
-        $response = $reservationM->getReservations($id);
+class reservation {
+    private $model;
 
-        if (isset($response) && !empty($response)) {
-            $json = array(
-                'status' => 200,
-                'results' => $response
-            );
-        } else {
-            $json = array(
-                'status' => 400,
-                'results' => "No entries"
-            );
-        }
-        echo json_encode(
-            $json,
-            http_response_code($json["status"])
-        );
+    public function __construct() {
+        $this->model = new ReservationModel();
     }
 
-    public function get($idStore,$idUser){
-        //Reservation instance
-        $reservationM = new ReservationModel;
-        //Model method
-        $response = $reservationM->getReservationByStoreAndUser($idStore,$idUser);
+    public function getReservations($storeId) {
+        $admin = isset($_GET['admin']) ? $_GET['admin'] : null;
+        $customerId = isset($_GET['customerId']) ? $_GET['customerId'] : null;
+        $date = isset($_GET['date']) ? $_GET['date'] : null;
 
-        if (isset($response) && !empty($response)) {
+        $reservations = $this->model->getReservations($storeId, $admin, $customerId, $date);
+        
+        if ($reservations) {
             $json = array(
                 'status' => 200,
-                'results' => $response
+                'results' => $reservations
             );
         } else {
             $json = array(
-                'status' => 400,
-                'results' => "No entries"
+                'status' => 404,
+                'results' => "No reservations found"
             );
         }
+
         echo json_encode(
             $json,
             http_response_code($json["status"])

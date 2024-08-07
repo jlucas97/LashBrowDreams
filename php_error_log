@@ -21,3 +21,17 @@
 [06-Aug-2024 07:42:51 Europe/Berlin] PHP   1. {main}() C:\xampp\htdocs\LashBrowDreams\index.php:0
 [06-Aug-2024 07:42:51 Europe/Berlin] PHP   2. RoutesController->index() C:\xampp\htdocs\LashBrowDreams\index.php:37
 [06-Aug-2024 07:42:51 Europe/Berlin] PHP   3. include() C:\xampp\htdocs\LashBrowDreams\controllers\RoutesController.php:6
+[07-Aug-2024 18:49:12 Europe/Berlin] PHP Warning:  require_once(controllers/reservation.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\LashBrowDreams\index.php on line 33
+[07-Aug-2024 18:49:12 Europe/Berlin] PHP Stack trace:
+[07-Aug-2024 18:49:12 Europe/Berlin] PHP   1. {main}() C:\xampp\htdocs\LashBrowDreams\index.php:0
+[07-Aug-2024 18:49:12 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'controllers/reservation.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\LashBrowDreams\index.php:33
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\LashBrowDreams\index.php on line 33
+[07-Aug-2024 18:49:12 Europe/Berlin] PHP Warning:  require_once(controllers/reservation.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\LashBrowDreams\index.php on line 33
+[07-Aug-2024 18:49:12 Europe/Berlin] PHP Stack trace:
+[07-Aug-2024 18:49:12 Europe/Berlin] PHP   1. {main}() C:\xampp\htdocs\LashBrowDreams\index.php:0
+[07-Aug-2024 18:49:12 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'controllers/reservation.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\LashBrowDreams\index.php:33
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\LashBrowDreams\index.php on line 33

@@ -2,27 +2,23 @@ import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-//import moment from "moment";
 import { appTheme } from "../../themes/theme";
 import ReservationServices from "../../services/ReservationServices";
 import StatusCircle from "../../context/StatusCircle";
 
-/*const formatDate = (dateString) => {
-  return moment(dateString).format("Do MMMM YYYY");
-};*/
-
 const columns = [
-  { field: "ID", headerName: "ID", width: 50 },
+  { field: "id", headerName: "ID", width: 50 },
   {
-    field: "Fecha",
+    field: "date",
     headerName: "Fecha",
     width: 130,
   },
-  { field: "hora", headerName: "Hora", width: 130 },
-  { field: "cliente", headerName: "Cliente", width: 130 },
-  { field: "servicio", headerName: "Servicio", width: 200 },
-  { field: "tienda", headerName: "Sucursal", width: 160 },
+  { field: "time", headerName: "Hora", width: 130 },
+  { field: "customerId", headerName: "Cliente", width: 130 },
+  { field: "serviceId", headerName: "Servicio", width: 200 },
+  { field: "storeId", headerName: "Sucursal", width: 160 },
   {
     field: "status",
     headerName: "Estado de la cita",
@@ -36,31 +32,53 @@ const columns = [
   {
     field: "admin", headerName: "Encargado", width: 180
   }
-  ];
-
-
+];
 
 export function ReservationList() {
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const [selectionModel, setSelectionModel] = useState([]);
+  const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
 
+  const storeId = localStorage.getItem("selectedStoreId");
+
   useEffect(() => {
-    ReservationServices.getReservations()
-      .then((response) => {
-        console.log("API response:", response);
-        setData(response.results);
-        setLoaded(true);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setError(error.message || "Sucedió un error");
-        setLoaded(true);
-      });
-  }, []);
+    if (storeId) {
+      ReservationServices.getReservationsByStoreAndUser(storeId)
+        .then((response) => {
+          console.log("API response:", response);
+          setData(response.results);
+          setLoaded(true);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          setError(error.message || "Sucedió un error");
+          setLoaded(true);
+        });
+    } else {
+      setError("Store ID not found in localStorage");
+      setLoaded(true);
+    }
+  }, [storeId]);
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const handleSearch = () => {
+    if (storeId) {
+      ReservationServices.getReservationsByStoreAndUser(storeId, null, search)
+        .then((response) => {
+          setData(response.results);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          setError(error.message || "Sucedió un error");
+        });
+    }
+  };
 
   console.log("Data", data);
 
@@ -69,11 +87,21 @@ export function ReservationList() {
 
   return (
     <>
+      <div>
+        <TextField
+          label="Buscar por cliente"
+          value={search}
+          onChange={handleSearchChange}
+        />
+        <Button onClick={handleSearch} variant="contained" color="primary">
+          Buscar
+        </Button>
+      </div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={data}
           columns={columns}
-          getRowId={(row) => row.ID}
+          getRowId={(row) => row.id}
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
@@ -81,7 +109,6 @@ export function ReservationList() {
           }}
           pageSizeOptions={[5, 10]}
           onRowClick={(params) => {
-            setSelectionModel([params.id]);
             navigate(`/reservation/${params.id}`);
           }}
           disableRowSelectionOnClick
