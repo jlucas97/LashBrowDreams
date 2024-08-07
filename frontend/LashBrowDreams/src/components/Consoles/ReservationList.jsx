@@ -3,18 +3,29 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
+import { styled } from '@mui/material/styles'; // Cambiado a @mui/material/styles
+import ReservationServices from "../../services/ReservationServices";
+import UserService from "../../services/UserService";
+import StatusCircle from "../../context/StatusCircle";
+import debounce from "lodash.debounce";
 import Button from "@mui/material/Button";
 import { appTheme } from "../../themes/theme";
-import ReservationServices from "../../services/ReservationServices";
-import StatusCircle from "../../context/StatusCircle";
+
+const SearchContainer = styled('div')(({ theme }) => ({ // Cambiado appTheme a theme
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: theme.spacing(2),
+}));
+
+const SearchInput = styled(TextField)(({ theme }) => ({ // Cambiado appTheme a theme
+  marginRight: theme.spacing(2),
+  flex: 1,
+}));
 
 const columns = [
   { field: "id", headerName: "ID", width: 50 },
-  {
-    field: "date",
-    headerName: "Fecha",
-    width: 130,
-  },
+  { field: "date", headerName: "Fecha", width: 130 },
   { field: "time", headerName: "Hora", width: 130 },
   { field: "customerId", headerName: "Cliente", width: 130 },
   { field: "serviceId", headerName: "Servicio", width: 200 },
@@ -29,9 +40,7 @@ const columns = [
       </div>
     ),
   },
-  {
-    field: "admin", headerName: "Encargado", width: 180
-  }
+  { field: "admin", headerName: "Encargado", width: 180 }
 ];
 
 export function ReservationList() {
@@ -41,44 +50,74 @@ export function ReservationList() {
   const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
-
   const storeId = localStorage.getItem("selectedStoreId");
 
   useEffect(() => {
     if (storeId) {
-      ReservationServices.getReservationsByStoreAndUser(storeId)
-        .then((response) => {
-          console.log("API response:", response);
-          setData(response.results);
-          setLoaded(true);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          setError(error.message || "Sucedió un error");
-          setLoaded(true);
-        });
+      fetchReservations(storeId);
     } else {
       setError("Store ID not found in localStorage");
       setLoaded(true);
     }
   }, [storeId]);
 
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
+  const fetchReservations = (storeId, customerId = "") => {
+    ReservationServices.getReservationsByStoreAndUser(storeId, null, customerId)
+      .then((response) => {
+        console.log("Fetch Reservations Response:", response); // Log the response
+        if (response && response.results) {
+          setData(response.results);
+        } else {
+          setError("No data found");
+          setData([]);
+        }
+        setLoaded(true);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setError(error.message || "Sucedió un error");
+        setLoaded(true);
+      });
   };
 
-  const handleSearch = () => {
+  const handleSearchChange = (event) => {
+    const query = event.target.value;
+    setSearch(query);
+    if (query === "") {
+      fetchReservations(storeId);
+    } else {
+      debouncedSearch(query);
+    }
+  };
+
+  const searchUsers = (query) => {
     if (storeId) {
-      ReservationServices.getReservationsByStoreAndUser(storeId, null, search)
+      UserService.getUserOnSearchBar(query)
         .then((response) => {
-          setData(response.results);
+          console.log("Search Users Response:", response); // Log the response
+          if (response && response.results) {
+            const users = response.results;
+            if (users.length > 0) {
+              const userEmails = users.map(user => user.email);
+              fetchReservations(storeId, userEmails[0]); // For simplicity, using the first matched user email
+            } else {
+              setData([]);
+              setError("No users found");
+            }
+          } else {
+            setData([]);
+            setError("No users found");
+          }
         })
         .catch((error) => {
-          console.error("Error:", error);
+          console.error("Error al obtener el usuario:", error);
           setError(error.message || "Sucedió un error");
+          setData([]);
         });
     }
   };
+
+  const debouncedSearch = debounce(searchUsers, 300);
 
   console.log("Data", data);
 
@@ -87,16 +126,23 @@ export function ReservationList() {
 
   return (
     <>
-      <div>
-        <TextField
+      <SearchContainer>
+        <SearchInput
           label="Buscar por cliente"
           value={search}
           onChange={handleSearchChange}
+          variant="outlined"
+          fullWidth
+          margin="normal"
         />
-        <Button onClick={handleSearch} variant="contained" color="primary">
-          Buscar
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => fetchReservations(storeId)}
+        >
+          Reset
         </Button>
-      </div>
+      </SearchContainer>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={data}
