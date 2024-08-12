@@ -15,7 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
 
 const pages = ["Productos","Reservas", "Facturación"];
-const settings = ["Perfil", "Mantenimiento", "Cerrar Sesión"];
+const settings = ["Perfil", "Mantenimiento", "Gestión", "Cerrar Sesión"];
 const routes = {
   "Productos": "/product",
   "Reservas": "/reservation",
@@ -23,7 +23,8 @@ const routes = {
 };
 const settingsRoutes = {
   "Perfil": "/profile",
-  "Mantenimiento": "/maintenance"
+  "Mantenimiento": "/maintenance",
+  "Gestión": "/management"
 }
 
 function ResponsiveAppBar() {

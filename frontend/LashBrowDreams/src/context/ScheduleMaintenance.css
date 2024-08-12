@@ -1,0 +1,11 @@
+.rbc-event {
+  position: relative;
+}
+
+.rbc-event button {
+  display: none;
+}
+
+.rbc-event:hover button {
+  display: block;
+}

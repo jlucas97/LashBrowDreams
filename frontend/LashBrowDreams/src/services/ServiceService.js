@@ -6,11 +6,10 @@ class ServiceServices {
 
     // Obtener todos los productos
     getServices() {
-        console.log('URL-> ' + BASE_URL);
         return axios.get(BASE_URL)
             .then(response => {
-                //console.log("Lista de servicios:", response);
-                return response.data;
+                console.log("Lista de servicios:", response.data.results);
+                return response.data.results;
             })
             .catch(error => {
                 console.error("Error al obtener los servicios:", error);

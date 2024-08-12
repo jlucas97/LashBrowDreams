@@ -2,6 +2,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { FormControl, InputLabel, Select, MenuItem, Box } from "@mui/material";
 import StoreServices from "../../services/StoreServices";
+import UserService from "../../services/UserService"; // Importa el servicio de usuario
 import { useEffect, useState } from "react";
 
 export function Home() {
@@ -28,8 +29,7 @@ export function Home() {
         }));
         setStores(mappedStores);
 
-        //Logic for localStorage
-
+        
         const initialStoreId = selectedStoreId || defaultStoreId;
         const selectedStore = mappedStores.find(
           (store) => store.id === initialStoreId
@@ -41,6 +41,7 @@ export function Home() {
             city: selectedStore.city,
           });
           fetchWeatherData(selectedStore.city);
+          fetchAdminByStore(selectedStore.id); 
         }
       })
       .catch((error) => {
@@ -61,6 +62,7 @@ export function Home() {
       });
       setSelectedStoreId(selectedStore.id);
       fetchWeatherData(selectedStore.city);
+      fetchAdminByStore(selectedStore.id); 
     }
   };
 
@@ -72,6 +74,20 @@ export function Home() {
       })
       .catch((error) => {
         console.error("Error al obtener los datos del clima:", error);
+      });
+  };
+
+  const fetchAdminByStore = (storeId) => {
+    UserService.getAdminByStore(storeId)
+      .then((response) => {
+        if (response.results && response.results.length > 0) {
+          const admin = response.results[0];
+          localStorage.setItem("adminName", admin.name);
+          localStorage.setItem("adminEmail", admin.email);
+        }
+      })
+      .catch((error) => {
+        console.error("Error al obtener el admin:", error);
       });
   };
 

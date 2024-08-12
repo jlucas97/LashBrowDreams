@@ -1,24 +1,28 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import { styled } from '@mui/material/styles'; // Cambiado a @mui/material/styles
+import { styled } from '@mui/material/styles';
 import ReservationServices from "../../services/ReservationServices";
-import UserService from "../../services/UserService";
 import StatusCircle from "../../context/StatusCircle";
-import debounce from "lodash.debounce";
+import debounce from "lodash/debounce";
 import Button from "@mui/material/Button";
+import { Grid } from "@mui/material";
 import { appTheme } from "../../themes/theme";
+import { toast } from "react-toastify";
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from "dayjs";
 
-const SearchContainer = styled('div')(({ theme }) => ({ // Cambiado appTheme a theme
+const SearchContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   marginBottom: theme.spacing(2),
 }));
 
-const SearchInput = styled(TextField)(({ theme }) => ({ // Cambiado appTheme a theme
+const SearchInput = styled(TextField)(({ theme }) => ({
   marginRight: theme.spacing(2),
   flex: 1,
 }));
@@ -45,84 +49,62 @@ const columns = [
 
 export function ReservationList() {
   const [data, setData] = useState([]);
-  const [error, setError] = useState("");
-  const [loaded, setLoaded] = useState(false);
   const [search, setSearch] = useState("");
-
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+  
   const navigate = useNavigate();
   const storeId = localStorage.getItem("selectedStoreId");
 
-  useEffect(() => {
-    if (storeId) {
-      fetchReservations(storeId);
-    } else {
-      setError("Store ID not found in localStorage");
-      setLoaded(true);
-    }
-  }, [storeId]);
-
-  const fetchReservations = (storeId, customerId = "") => {
-    ReservationServices.getReservationsByStoreAndUser(storeId, null, customerId)
+  // Simplified fetchReservations
+  const fetchReservations = useCallback((storeId, customerId = "", date = null) => {
+    const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : null;
+    setLoaded(false); // Ensure loading state is managed
+    ReservationServices.getReservationsByStoreAndUser(storeId, null, customerId, formattedDate)
       .then((response) => {
-        console.log("Fetch Reservations Response:", response); // Log the response
-        if (response && response.results) {
+        if (response && response.results && response.results.length > 0) {
           setData(response.results);
         } else {
-          setError("No data found");
           setData([]);
+          toast.warn("No se encontraron coincidencias");
         }
-        setLoaded(true);
       })
       .catch((error) => {
         console.error("Error:", error);
-        setError(error.message || "Sucedió un error");
-        setLoaded(true);
+        setData([]);
+        toast.error("Error al obtener las reservaciones");
+      })
+      .finally(() => {
+        setLoaded(true); // Final loading state
       });
-  };
+  }, []);
 
-  const handleSearchChange = (event) => {
+  useEffect(() => {
+    if (storeId) {
+      fetchReservations(storeId, search, selectedDate);
+    } else {
+      setLoaded(true);
+    }
+  }, [storeId, search, selectedDate, fetchReservations]);
+
+  const handleSearchChange = useCallback((event) => {
     const query = event.target.value;
     setSearch(query);
-    if (query === "") {
-      fetchReservations(storeId);
-    } else {
-      debouncedSearch(query);
-    }
-  };
+    debouncedSearch(query, selectedDate);
+  }, [selectedDate]);
 
-  const searchUsers = (query) => {
-    if (storeId) {
-      UserService.getUserOnSearchBar(query)
-        .then((response) => {
-          console.log("Search Users Response:", response); // Log the response
-          if (response && response.results) {
-            const users = response.results;
-            if (users.length > 0) {
-              const userEmails = users.map(user => user.email);
-              fetchReservations(storeId, userEmails[0]); // For simplicity, using the first matched user email
-            } else {
-              setData([]);
-              setError("No users found");
-            }
-          } else {
-            setData([]);
-            setError("No users found");
-          }
-        })
-        .catch((error) => {
-          console.error("Error al obtener el usuario:", error);
-          setError(error.message || "Sucedió un error");
-          setData([]);
-        });
-    }
-  };
+  const handleDateChange = useCallback((date) => {
+    setSelectedDate(date);
+    fetchReservations(storeId, search, date);
+  }, [storeId, search, fetchReservations]);
 
-  const debouncedSearch = debounce(searchUsers, 300);
+  const handleReset = useCallback(() => {
+    setSearch("");
+    setSelectedDate(null);
+    fetchReservations(storeId);
+  }, [storeId, fetchReservations]);
 
-  console.log("Data", data);
-
-  if (!loaded) return <p>Cargando...</p>;
-  if (error) return <p>Error: {error}</p>;
+  const debouncedSearch = useCallback(debounce((query, date) => fetchReservations(storeId, query, date), 300), [storeId, fetchReservations]);
 
   return (
     <>
@@ -138,11 +120,30 @@ export function ReservationList() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => fetchReservations(storeId)}
+          onClick={handleReset}
         >
-          Reset
+          Limpiar
         </Button>
       </SearchContainer>
+      <Grid container justifyContent="center" style={{ marginBottom: "20px" }}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            views={['year', 'month', 'day']}
+            label="Seleccionar Fecha"
+            value={selectedDate}
+            onChange={handleDateChange}
+            renderInput={(params) => <TextField {...params} helperText={null} />}
+          />
+        </LocalizationProvider>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleReset}
+          style= {{marginLeft: "40px", marginTop:"10px", height:"50%", display: "flex", alignItems: "center"}}
+        >
+          Limpiar
+        </Button>
+      </Grid>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={data}

@@ -13,12 +13,12 @@ export function Maintenance() {
     {
       id: 1,
       title: "Mantenimiento Productos",
-      form: "product"
+      form: "product",
     },
     {
       id: 2,
       title: "Mantenimiento Servicios",
-      form: "service"
+      form: "service",
     },
     {
       id: 3,
@@ -27,13 +27,19 @@ export function Maintenance() {
     },
     {
       id: 4,
-      title: "Mantenimiento Horario"
-    }
+      title: "Mantenimiento Horario",
+      form: "schedule",
+    },
   ];
 
   return (
     <div>
-      <Typography variant="h2" align="center" gutterBottom marginBottom={"120px"}>
+      <Typography
+        variant="h2"
+        align="center"
+        gutterBottom
+        marginBottom={"120px"}
+      >
         Página de Mantenimientos
       </Typography>
       <Grid container spacing={6}>
@@ -46,18 +52,15 @@ export function Maintenance() {
                   backgroundColor: "#A8CEC0",
                   color: "white",
                   textAlign: "center",
-                  
                 }}
               />
-              <CardActions style={{ justifyContent: "center",  }}>
+              <CardActions style={{ justifyContent: "center" }}>
                 <Button
                   component={Link}
                   to={`/maintenance/${maintenance.form}`}
                   variant="contained"
                   color="primary"
-                  style={{backgroundColor: "#FF7AA2",
-                    color: "white"
-                  }}
+                  style={{ backgroundColor: "#FF7AA2", color: "white" }}
                 >
                   Ir a {maintenance.title}
                 </Button>

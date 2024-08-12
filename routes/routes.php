@@ -47,7 +47,11 @@ if (count($routesArray) > 1 && isset($_SERVER['REQUEST_METHOD'])) {
                 $param = $routesArray[3];
                 switch ($_SERVER['REQUEST_METHOD']) {
                     case 'GET':
-                        $action = "get";
+                        if ($param === 'get') {
+                            $action = "get";
+                        } else {
+                            $action = "getById";
+                        }
                         $response->$action($param);
                         break;
                     case 'POST':

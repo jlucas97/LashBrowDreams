@@ -2,15 +2,27 @@ import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { TextField, Button, Grid, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import InvoiceService from "../../services/InvoiceService";
-import Button from "@mui/material/Button";
-//import moment from "moment";
+import debounce from "lodash/debounce";
 import { appTheme } from "../../themes/theme";
 import ReportePastel from "./GraphicPie";
+import { toast } from "react-toastify";
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-/*const formatDate = (dateString) => {
-  return moment(dateString).format("Do MMMM YYYY");
-};*/
+const SearchContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: theme.spacing(2),
+}));
+
+const SearchInput = styled(TextField)(({ theme }) => ({
+  marginRight: theme.spacing(2),
+  flex: 1,
+}));
 
 const columns = [
   { field: "ID_Factura", headerName: "ID Factura", width: 130 },
@@ -18,7 +30,6 @@ const columns = [
     field: "Fecha",
     headerName: "Fecha",
     width: 130,
-    //valueFormatter: (params) => formatDate(params.value),
   },
   { field: "Nombre", headerName: "Nombre", width: 130 },
   { field: "Total", headerName: "Total", width: 130 },
@@ -30,24 +41,70 @@ export function InvoiceList() {
   const [loaded, setLoaded] = useState(false);
   const [selectionModel, setSelectionModel] = useState([]);
   const [showReporte, setShowReporte] = useState(false);
+  const [search, setSearch] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
   const navigate = useNavigate();
+  const storeId = localStorage.getItem("selectedStoreId");
 
   useEffect(() => {
-    InvoiceService.getInvoiceList()
+    if (storeId) {
+      fetchInvoices(storeId);
+    } else {
+      setError("Store ID not found in localStorage");
+      setLoaded(true);
+    }
+  }, [storeId]);
+
+  const fetchInvoices = (storeId, query = "") => {
+    InvoiceService.getInvoiceListByStore(storeId, query)
       .then((response) => {
-        //console.log("API response:", response);
-        setData(response.results);
+        if (response && response.results) {
+          setData(response.results);
+          setError(""); // Limpiar error previo
+        } else {
+          setData([]);
+          if (query) {
+            toast.warn("No se encontraron coincidencias");
+          }
+        }
         setLoaded(true);
       })
       .catch((error) => {
         console.error("Error:", error);
-        setError(error.message || "Sucedió un error");
+        setData([]); // Mostrar grid vacío
+        if (error.response && error.response.status === 400) {
+          toast.warn("No se encontraron coincidencias");
+        } else {
+          toast.error("Error al obtener las facturas");
+        }
         setLoaded(true);
       });
-  }, []);
+  };
+
+  const handleSearchChange = (event) => {
+    const query = event.target.value;
+    setSearch(query);
+    if (query === "") {
+      fetchInvoices(storeId);
+    } else {
+      debouncedSearch(query);
+    }
+  };
+
+  const handleReset = () => {
+    setSearch(""); 
+    fetchInvoices(storeId); 
+  };
+
+  const debouncedSearch = debounce((query) => fetchInvoices(storeId, query), 300);
 
   const handleShowReporte = () => {
     setShowReporte(!showReporte);
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    console.log("Selected Date:", date); // Mostrar la fecha seleccionada en consola
   };
 
   if (!loaded) return <p>Cargando...</p>;
@@ -55,6 +112,37 @@ export function InvoiceList() {
 
   return (
     <>
+      <Typography variant="h2" align="center" gutterBottom marginBottom={8}>
+        Facturas
+      </Typography>
+      <SearchContainer>
+        <SearchInput
+          label="Buscar por nombre del cliente"
+          value={search}
+          onChange={handleSearchChange}
+          variant="outlined"
+          fullWidth
+          margin="normal"
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleReset}
+        >
+          Limpiar
+        </Button>
+      </SearchContainer>
+      <Grid container justifyContent="center" style={{ marginBottom: "20px" }}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            views={['year', 'month', 'day']}
+            label="Seleccionar Fecha"
+            value={selectedDate}
+            onChange={handleDateChange}
+            renderInput={(params) => <TextField {...params} helperText={null} />}
+          />
+        </LocalizationProvider>
+      </Grid>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={data}

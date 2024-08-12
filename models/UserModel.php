@@ -10,6 +10,22 @@ class UserModel
         $this->link = new MySqlConnect();
     }
 
+    public function getUsers()
+    {
+        try {
+            // SQL Query
+            $vSQL = "SELECT * 
+                     FROM user 
+                     order by email desc";
+
+            $vResult = $this->link->executeSQL($vSQL);
+
+            return $vResult;
+        } catch (Exception $e) {
+            die("" . $e->getMessage());
+        }
+    }
+
     public function getUsersById($id)
     {
         try {
@@ -25,5 +41,14 @@ class UserModel
         } catch (Exception $e) {
             die("" . $e->getMessage());
         }
+    }
+
+    public function getAdminByStore($storeId)
+    {
+        $sql = "SELECT u.* FROM user u
+                INNER JOIN user_store us ON u.email = us.userEmail
+                WHERE us.storeId = ?";
+        $params = [$storeId];
+        return $this->link->executeSQL($sql, 'obj', $params);
     }
 }

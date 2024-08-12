@@ -8,7 +8,7 @@ class MySqlConnect
     private $password;
     private $host;
     private $dbname;
-    private $link;
+    public $link;  // Cambiado a público para acceso directo
 
     public function __construct()
     {
@@ -29,6 +29,7 @@ class MySqlConnect
             if ($this->link->connect_error) {
                 throw new \Exception('Connect Error (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
             }
+            return $this->link;  // Retornar la conexión
         } catch (Exception $e) {
             throw new \Exception('Error: ' . $e->getMessage());
         }
@@ -55,8 +56,6 @@ class MySqlConnect
      * @param $resultType - result type of the format tipo (obj,asoc,num)
      * @returns $resultType
      */
-    // MySqlConnect.php
-
     public function executeSQL($sql, $resultType = "obj", $params = [])
     {
         $list = NULL;
@@ -96,20 +95,25 @@ class MySqlConnect
         }
     }
 
-
     /**
      * Execute a SQL sentence type INSERT, UPDATE
      * @param $sql - string SQL sentence 
      * @returns $num_result - number of results of the execution
      */
-    public function executeSQL_DML($sql)
+    public function executeSQL_DML($sql, $params = [])
     {
         $num_results = 0;
         try {
             $this->connect();
-            if ($result = $this->link->query($sql)) {
-                $num_results = mysqli_affected_rows($this->link);
+            $stmt = $this->link->prepare($sql);
+            if ($params) {
+                $types = str_repeat('s', count($params));
+                $stmt->bind_param($types, ...$params);
             }
+            if ($stmt->execute()) {
+                $num_results = $stmt->affected_rows;
+            }
+            $stmt->close();
             $this->close();
             return $num_results;
         } catch (Exception $e) {
@@ -122,14 +126,20 @@ class MySqlConnect
      * @param $sql - string SQL sentence 
      * @returns $num_result - last inserted id
      */
-    public function executeSQL_DML_last($sql)
+    public function executeSQL_DML_last($sql, $params = [])
     {
         $num_results = 0;
         try {
             $this->connect();
-            if ($result = $this->link->query($sql)) {
-                $num_results = $this->link->insert_id;
+            $stmt = $this->link->prepare($sql);
+            if ($params) {
+                $types = str_repeat('s', count($params));
+                $stmt->bind_param($types, ...$params);
             }
+            if ($stmt->execute()) {
+                $num_results = $stmt->insert_id;
+            }
+            $stmt->close();
             $this->close();
             return $num_results;
         } catch (Exception $e) {
