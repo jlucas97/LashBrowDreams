@@ -28,20 +28,24 @@ const InvoiceForm = () => {
 
   useEffect(() => {
     // Fetch products and customers
-    ProductService.getProducts().then((response) => {
-      console.log("Productos:", response.results);
-      setProducts(response.results);
-    });
+    ProductService.getProducts()
+      .then((response) => {
+        setProducts(response.data || response.results);
+      })
+      .catch(() => {
+        toast.error("Error al obtener los productos");
+      });
 
-    UserService.getUsers().then((response) => {
-      console.log("Clientes:", response.results);
-      setCustomers(response.results);
-    });
+    UserService.getUsers()
+      .then((response) => {
+        setCustomers(response.data || response.results);
+      })
+      .catch(() => {
+        toast.error("Error al obtener los clientes");
+      });
 
-    const storedStore = JSON.parse(localStorage.getItem('selectedStoreId'));
-    const storedAdmin = JSON.parse(localStorage.getItem('currentAdmin'));
-    console.log("Store:", storedStore);
-    console.log("Admin:", storedAdmin);
+    const storedStore = localStorage.getItem('selectedStoreId');
+    const storedAdmin = localStorage.getItem('adminName');
 
     setStore(storedStore);
     setAdmin(storedAdmin);
@@ -85,7 +89,7 @@ const InvoiceForm = () => {
       });
   };
 
-  const handleProductChange = (index, field, value) => {
+  const handleProductChange = (index, value) => {
     const product = products.find((p) => p.id === value);
     if (product) {
       setValue(`products.${index}.price`, product.price);
@@ -117,7 +121,7 @@ const InvoiceForm = () => {
         <Grid item xs={6}>
           <TextField
             label="Sucursal"
-            value={store ? store.name : 'Cargando...'}
+            value={store}
             fullWidth
             InputProps={{
               readOnly: true,
@@ -136,16 +140,11 @@ const InvoiceForm = () => {
                 fullWidth
                 onChange={(e) => {
                   field.onChange(e.target.value);
-                  const customer = customers.find((c) => c.id === e.target.value);
-                  if (customer) {
-                    setValue('customerName', customer.name);
-                    setValue('customerEmail', customer.email);
-                  }
                 }}
               >
                 {customers.map((customer) => (
                   <MenuItem key={customer.id} value={customer.id}>
-                    {customer.name}
+                    {customer.name} ({customer.email})
                   </MenuItem>
                 ))}
               </TextField>
@@ -155,7 +154,7 @@ const InvoiceForm = () => {
         <Grid item xs={6}>
           <TextField
             label="Encargado"
-            value={admin ? admin.name : 'Cargando...'}
+            value={admin}
             fullWidth
             InputProps={{
               readOnly: true,
@@ -180,7 +179,7 @@ const InvoiceForm = () => {
                   fullWidth
                   onChange={(e) => {
                     field.onChange(e.target.value);
-                    handleProductChange(index, field, e.target.value);
+                    handleProductChange(index, e.target.value);
                   }}
                 >
                   {products.map((product) => (

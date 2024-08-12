@@ -9,7 +9,7 @@ class InvoiceModel {
 
     public function getInvoiceListByStore($id, $query = '') {
         try {
-            $vSQL = "select i.id as ID_Factura, i.date as Fecha, u.name as Nombre, it.Total
+            $vSQL = "select i.id as ID_Factura, i.date as Fecha, u.name as Nombre, it.Total, i.type as Tipo
                     from invoice as i inner join user as u on i.customerId = u.email
                     inner join invoice_total as it on i.id = it.invoiceId
                     inner join store as s on i.storeId = s.id
@@ -33,7 +33,7 @@ class InvoiceModel {
     public function getInvoiceHeading($id) {
         try {
             $vSQL = "select i.id as ID_Factura, i.date as Fecha, u.email as Correo_Electronico, u.name as Nombre,
-                    s.name as Tienda, s.address as Direccion, it.subtotal as Subtotal, it.taxAmount as IVA, it.total
+                    s.name as Tienda, s.address as Direccion, it.subtotal as Subtotal, it.taxAmount as IVA, it.total, i.type as Tipo
                     from invoice as i inner join user as u on i.customerId = u.email
                     inner join invoice_total as it on i.id = it.invoiceId
                     inner join store as s on s.id = i.storeId

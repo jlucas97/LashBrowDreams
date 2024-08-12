@@ -67,8 +67,20 @@ class MySqlConnect
                 $stmt->bind_param($types, ...$params);
             }
             if ($stmt->execute()) {
-                $result = $stmt->get_result();
-                while ($row = $result->fetch_assoc()) {
+                // Bind result variables
+                $meta = $stmt->result_metadata();
+                $variables = [];
+                $data = [];
+                while ($field = $meta->fetch_field()) {
+                    $variables[] = &$data[$field->name];
+                }
+                call_user_func_array([$stmt, 'bind_result'], $variables);
+                
+                while ($stmt->fetch()) {
+                    $row = [];
+                    foreach($data as $key => $val) {
+                        $row[$key] = $val;
+                    }
                     switch ($resultType) {
                         case "obj":
                             $list[] = (object)$row;
@@ -94,6 +106,7 @@ class MySqlConnect
             throw new \Exception('Error: ' . $e->getMessage());
         }
     }
+    
 
     /**
      * Execute a SQL sentence type INSERT, UPDATE

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Grid, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -11,6 +11,7 @@ import ReportePastel from "./GraphicPie";
 import { toast } from "react-toastify";
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from "dayjs";
 
 const SearchContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -26,13 +27,10 @@ const SearchInput = styled(TextField)(({ theme }) => ({
 
 const columns = [
   { field: "ID_Factura", headerName: "ID Factura", width: 130 },
-  {
-    field: "Fecha",
-    headerName: "Fecha",
-    width: 130,
-  },
+  { field: "Fecha", headerName: "Fecha", width: 130 },
   { field: "Nombre", headerName: "Nombre", width: 130 },
   { field: "Total", headerName: "Total", width: 130 },
+  {field: "Tipo", headerName: "Tipo de Factura",width: 130 }
 ];
 
 export function InvoiceList() {
@@ -46,24 +44,17 @@ export function InvoiceList() {
   const navigate = useNavigate();
   const storeId = localStorage.getItem("selectedStoreId");
 
-  useEffect(() => {
-    if (storeId) {
-      fetchInvoices(storeId);
-    } else {
-      setError("Store ID not found in localStorage");
-      setLoaded(true);
-    }
-  }, [storeId]);
-
-  const fetchInvoices = (storeId, query = "") => {
-    InvoiceService.getInvoiceListByStore(storeId, query)
+  const fetchInvoices = useCallback((storeId, query = "", date = null) => {
+    const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : null;
+    setLoaded(false); // Ensure loading state is managed
+    InvoiceService.getInvoiceListByStore(storeId, query, formattedDate)
       .then((response) => {
         if (response && response.results) {
           setData(response.results);
           setError(""); // Limpiar error previo
         } else {
           setData([]);
-          if (query) {
+          if (query || formattedDate) {
             toast.warn("No se encontraron coincidencias");
           }
         }
@@ -79,32 +70,42 @@ export function InvoiceList() {
         }
         setLoaded(true);
       });
-  };
+  }, []);
 
-  const handleSearchChange = (event) => {
+  useEffect(() => {
+    if (storeId) {
+      fetchInvoices(storeId, search, selectedDate);
+    } else {
+      setError("Store ID not found in localStorage");
+      setLoaded(true);
+    }
+  }, [storeId, search, selectedDate, fetchInvoices]);
+
+  const handleSearchChange = useCallback((event) => {
     const query = event.target.value;
     setSearch(query);
     if (query === "") {
-      fetchInvoices(storeId);
+      fetchInvoices(storeId, "", selectedDate);
     } else {
       debouncedSearch(query);
     }
-  };
+  }, [selectedDate, fetchInvoices]);
 
-  const handleReset = () => {
-    setSearch(""); 
-    fetchInvoices(storeId); 
-  };
+  const handleDateChange = useCallback((date) => {
+    setSelectedDate(date);
+    fetchInvoices(storeId, search, date); // Llamar con la fecha seleccionada
+  }, [storeId, search, fetchInvoices]);
 
-  const debouncedSearch = debounce((query) => fetchInvoices(storeId, query), 300);
+  const handleReset = useCallback(() => {
+    setSearch("");
+    setSelectedDate(null);
+    fetchInvoices(storeId);
+  }, [storeId, fetchInvoices]);
+
+  const debouncedSearch = useCallback(debounce((query) => fetchInvoices(storeId, query, selectedDate), 300), [storeId, fetchInvoices, selectedDate]);
 
   const handleShowReporte = () => {
     setShowReporte(!showReporte);
-  };
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    console.log("Selected Date:", date); // Mostrar la fecha seleccionada en consola
   };
 
   if (!loaded) return <p>Cargando...</p>;

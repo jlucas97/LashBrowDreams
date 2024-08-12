@@ -9,6 +9,8 @@ import {
   CardContent,
   CardHeader,
   Divider,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -25,70 +27,54 @@ const ReservationForm = () => {
   const [selectedService, setSelectedService] = useState('');
 
   useEffect(() => {
-    // Obtener la lista de servicios
     ServiceServices.getServices()
       .then((response) => {
-        console.log("Servicios", response)
-        setServices(response.data || response); // Ajuste según cómo llega la respuesta
+        setServices(response.data || response);
       })
-      .catch((error) => {
-        console.error("Error al obtener los servicios:", error);
+      .catch(() => {
         toast.error("Error al obtener los servicios");
       });
   }, []);
 
   useEffect(() => {
-    // Obtener la lista de clientes al cargar el componente
     UserService.getUsers()
       .then((response) => {
-        setCustomers(response.results || response); // Ajuste según cómo llega la respuesta
+        setCustomers(response.results || response);
       })
-      .catch((error) => {
-        console.error("Error al obtener los clientes:", error);
+      .catch(() => {
         toast.error("Error al obtener los clientes");
       });
   }, []);
 
   const onSubmit = (data) => {
-    // Verifica los valores seleccionados en el formulario
-    console.log('Datos seleccionados:', data);
-    console.log('Cliente seleccionado:', selectedCustomer);
-    console.log('Servicio seleccionado:', selectedService);
-  
-    // Verifica que la fecha no sea anterior a la fecha actual
     if (new Date(data.date) < new Date()) {
       toast.error("La fecha seleccionada no puede ser anterior a la actual");
       return;
     }
-  
+
     const reservationData = {
       ...data,
-      customerId: selectedCustomer, // Cliente seleccionado
-      serviceId: selectedService, // Servicio seleccionado
-      status: "Pendiente", // Estado predeterminado
-      admin: localStorage.getItem("adminEmail"), // Asegúrate de que la clave sea la correcta
-      storeId: localStorage.getItem("selectedStoreId"), // Asegúrate de que la clave sea la correcta
-      date: data.date, // Fecha seleccionada en el formulario
-      time: data.time, // Hora seleccionada en el formulario
+      customerId: selectedCustomer,
+      serviceId: selectedService,
+      status: "Pendiente",
+      admin: localStorage.getItem("adminEmail"),
+      storeId: localStorage.getItem("selectedStoreId"),
+      date: data.date,
+      time: data.time,
     };
-  
-    console.log('Datos de la reserva antes de enviar:', reservationData);
-  
-    // Enviar la solicitud de creación de reserva
+
     ReservationServices.createReservation(reservationData)
       .then(() => {
         toast.success("Reserva registrada exitosamente");
         reset();
-        setSelectedCustomer(''); // Reiniciar selección de cliente
-        setSelectedService(''); // Reiniciar selección de servicio
+        setSelectedCustomer('');
+        setSelectedService('');
       })
-      .catch((error) => {
-        console.error("Error al registrar la reserva:", error);
+      .catch(() => {
         toast.error("Error al registrar la reserva");
       });
   };
-  
-  
+
   const handleCustomerChange = (event) => {
     setSelectedCustomer(event.target.value);
   };
@@ -185,10 +171,28 @@ const ReservationForm = () => {
                 >
                   {services.map((service) => (
                     <MenuItem key={service.id} value={service.id}>
-                      {service.name || service.Nombre}
+                      {service.name || service.Nombre} - Duración {service.Duracion} minutos - ₡{service.Precio} 
                     </MenuItem>
                   ))}
                 </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox name="promotions" />}
+                  label="¿Te gustaría que te enviemos promociones?"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox name="beautyProducts" />}
+                  label="¿Te interesaría algún producto para el cuidado y belleza?"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox name="survey" />}
+                  label="¿Podemos enviarte una encuesta al terminar tu cita?"
+                />
               </Grid>
               <Grid item xs={12}>
                 <Button type="submit" variant="contained" color="primary" fullWidth>

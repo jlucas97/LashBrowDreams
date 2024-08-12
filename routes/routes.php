@@ -4,6 +4,9 @@ $replaceChars = ["&", "/", "?"];
 $routesArray = explode("/", str_replace($replaceChars, "/", $_SERVER['REQUEST_URI']));
 $routesArray = array_filter($routesArray);
 
+// Log de las rutas analizadas
+error_log("Rutas analizadas: " . json_encode($routesArray));
+
 // No API request
 if (count($routesArray) == 1) {
     $json = array(
@@ -22,8 +25,16 @@ if (count($routesArray) == 1) {
 if (count($routesArray) > 1 && isset($_SERVER['REQUEST_METHOD'])) {
     $controller = $routesArray[2];
     $action = "index";
+
+    // Log del método HTTP
+    error_log("Método HTTP: " . $_SERVER['REQUEST_METHOD']);
+
     try {
         $response = new $controller();
+
+        // Log del controlador
+        error_log("Controlador: " . $controller);
+
         if (count($routesArray) <= 3) {
             switch ($_SERVER['REQUEST_METHOD']) {
                 case 'GET':
@@ -43,6 +54,10 @@ if (count($routesArray) > 1 && isset($_SERVER['REQUEST_METHOD'])) {
                     $action = "index";
                     break;
             }
+
+            // Log de la acción
+            error_log("Acción: " . $action);
+
             if (count($routesArray) == 3) {
                 $param = $routesArray[3];
                 switch ($_SERVER['REQUEST_METHOD']) {

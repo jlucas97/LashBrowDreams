@@ -55,8 +55,7 @@ class reservation {
 
     public function create() {
         $data = json_decode(file_get_contents("php://input"), true);
-        $data['admin'] = $this->getAdminByStore($data['storeId']);
-
+        
         if (strtotime($data['date']) < strtotime(date('Y-m-d'))) {
             $json = array(
                 'status' => 400,
@@ -66,17 +65,11 @@ class reservation {
             return;
         }
 
-        if (!$this->isTimeAvailable($data['storeId'], $data['date'], $data['time'])) {
-            $json = array(
-                'status' => 400,
-                'result' => 'El tiempo seleccionado no está disponible o está bloqueado.'
-            );
-            echo json_encode($json, http_response_code($json['status']));
-            return;
-        }
-
         $result = $this->model->createReservation($data);
         if ($result) {
+            // Crear proforma después de registrar la reserva
+            $this->createProforma($result, $data);
+
             $json = array(
                 'status' => 200,
                 'result' => 'Reserva registrada exitosamente.'
@@ -91,17 +84,47 @@ class reservation {
         echo json_encode($json, http_response_code($json['status']));
     }
 
-    private function isTimeAvailable($storeId, $date, $time) {
-        // Lógica para verificar si el tiempo está disponible
-        $sql = "SELECT * FROM schedule WHERE storeId = ? AND dayOfWeek = ? AND ? BETWEEN startTime AND endTime";
-        $params = [$storeId, date('N', strtotime($date)), $time]; 
+    private function createProforma($reservationId, $data) {
+        $conn = new MySqlConnect();
+        $conn->connect();
 
-        $result = $this->model->executeSQL($sql, 'obj', $params);
-        return empty($result);
+        // Insertar la proforma en la tabla `invoice`
+        $sqlInvoice = "INSERT INTO `invoice` (`date`, `time`, `customerId`, `storeId`, `type`)
+                       VALUES (?, ?, ?, ?, 'Proforma')";
+        $paramsInvoice = [$data['date'], $data['time'], $data['customerId'], $data['storeId']];
+        $invoiceId = $conn->executeSQL_DML_last($sqlInvoice, $paramsInvoice);
+
+        // Insertar el detalle de la proforma en la tabla `invoice_detail`
+        $sqlInvoiceDetail = "INSERT INTO `invoice_detail` (`invoiceId`, `serviceId`, `quantity`, `total`)
+                             VALUES (?, ?, ?, ?)";
+        
+        $serviceId = $data['serviceId'];
+        $quantity = 1; // Asumiendo que es 1 servicio por reserva
+        $servicePrice = $this->getServicePrice($serviceId); // Obtener el precio del servicio
+
+        $paramsInvoiceDetail = [$invoiceId, $serviceId, $quantity, $servicePrice * $quantity];
+        $conn->executeSQL_DML($sqlInvoiceDetail, $paramsInvoiceDetail);
+
+        // Calcular subtotal, impuesto (13%) y total
+        $subtotal = $servicePrice * $quantity;
+        $taxAmount = $subtotal * 0.13;
+        $total = $subtotal + $taxAmount;
+
+        // Insertar el total en la tabla `invoice_total`
+        $sqlInvoiceTotal = "INSERT INTO `invoice_total` (`invoiceId`, `subtotal`, `taxAmount`, `total`)
+                            VALUES (?, ?, ?, ?)";
+        $paramsInvoiceTotal = [$invoiceId, $subtotal, $taxAmount, $total];
+        $conn->executeSQL_DML($sqlInvoiceTotal, $paramsInvoiceTotal);
+
+        $conn->close();
     }
 
-    private function getAdminByStore($storeId) {
-        // Lógica para obtener el admin asociado a la tienda
-        return 'admin_id_o_nombre'; // Debes ajustar esto según tu lógica
+    private function getServicePrice($serviceId) {
+        // Obtener el precio del servicio desde la base de datos
+        $conn = new MySqlConnect();
+        $sql = "SELECT price FROM services WHERE id = ?";
+        $result = $conn->executeSQL($sql, "num", [$serviceId]);
+        return $result[0][0]; // Retorna el precio
     }
+
 }
