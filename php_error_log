@@ -9788,3 +9788,43 @@ Stack trace:
 [12-Aug-2024 06:53:11 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"billing","3":"index","4":"2"}
 [12-Aug-2024 06:53:11 Europe/Berlin] Método HTTP: GET
 [12-Aug-2024 06:53:11 Europe/Berlin] Controlador: billing
+[13-Aug-2024 03:47:16 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[13-Aug-2024 03:47:16 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:47:16 Europe/Berlin] Controlador: product
+[13-Aug-2024 03:47:16 Europe/Berlin] Acción: index
+[13-Aug-2024 03:47:16 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[13-Aug-2024 03:47:16 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:47:16 Europe/Berlin] Controlador: product
+[13-Aug-2024 03:47:16 Europe/Berlin] Acción: index
+[13-Aug-2024 03:47:17 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[13-Aug-2024 03:47:17 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:47:17 Europe/Berlin] Controlador: store
+[13-Aug-2024 03:47:17 Europe/Berlin] Acción: index
+[13-Aug-2024 03:47:18 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[13-Aug-2024 03:47:18 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:47:18 Europe/Berlin] Controlador: store
+[13-Aug-2024 03:47:18 Europe/Berlin] Acción: index
+[13-Aug-2024 03:47:21 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[13-Aug-2024 03:47:21 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"getAdminByStore","4":"1"}
+[13-Aug-2024 03:47:21 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:47:21 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:47:21 Europe/Berlin] Controlador: store
+[13-Aug-2024 03:47:21 Europe/Berlin] Controlador: user
+[13-Aug-2024 03:47:21 Europe/Berlin] Acción: index
+[13-Aug-2024 03:47:21 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"getAdminByStore","4":"1"}
+[13-Aug-2024 03:47:21 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:47:21 Europe/Berlin] Controlador: user
+[13-Aug-2024 03:48:21 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"reservation","3":"getReservations","4":"1","5":"customerId="}
+[13-Aug-2024 03:48:21 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:48:21 Europe/Berlin] Controlador: reservation
+[13-Aug-2024 03:48:22 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"reservation","3":"getReservations","4":"1","5":"customerId="}
+[13-Aug-2024 03:48:22 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:48:22 Europe/Berlin] Controlador: reservation
+[13-Aug-2024 03:48:24 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[13-Aug-2024 03:48:24 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:48:24 Europe/Berlin] Controlador: product
+[13-Aug-2024 03:48:24 Europe/Berlin] Acción: index
+[13-Aug-2024 03:48:25 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[13-Aug-2024 03:48:25 Europe/Berlin] Método HTTP: GET
+[13-Aug-2024 03:48:25 Europe/Berlin] Controlador: product
+[13-Aug-2024 03:48:25 Europe/Berlin] Acción: index

@@ -29,15 +29,16 @@ CREATE TABLE `reservation` (
   `serviceId` int DEFAULT NULL,
   `date` date DEFAULT NULL,
   `time` time DEFAULT NULL,
-  `status` tinyint DEFAULT NULL,
+  `admin` varchar(100) DEFAULT NULL,
+  `status` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_reservation_customerid_idx` (`customerId`),
   KEY `fk_reservation_store_idx` (`storeId`),
   KEY `fk_reservation_service_idx` (`serviceId`),
-  CONSTRAINT `fk_reservation_customer` FOREIGN KEY (`customerId`) REFERENCES `user` (`email`),
+  KEY `fk_reservation_user_idx` (`customerId`),
   CONSTRAINT `fk_reservation_service` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`),
-  CONSTRAINT `fk_reservation_store` FOREIGN KEY (`storeId`) REFERENCES `store` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_reservation_store` FOREIGN KEY (`storeId`) REFERENCES `store` (`id`),
+  CONSTRAINT `fk_reservation_user` FOREIGN KEY (`customerId`) REFERENCES `user` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +47,7 @@ CREATE TABLE `reservation` (
 
 LOCK TABLES `reservation` WRITE;
 /*!40000 ALTER TABLE `reservation` DISABLE KEYS */;
-INSERT INTO `reservation` VALUES (1,'shakira@cosmeticos.com',1,3,'2024-06-14','14:00:00',NULL),(2,'antorocuzzo@messi.com',1,1,'2024-06-25','10:00:00',NULL),(3,'kent@springfield',2,2,'2024-06-26','11:00:00',NULL),(4,'shakira@cosmeticos.com',3,3,'2024-06-27','12:00:00',NULL),(5,'teressa@lashes.com',1,2,'2024-06-28','13:00:00',NULL),(6,'antorocuzzo@messi.com',2,3,'2024-07-29','14:00:00',NULL),(7,'kent@springfield',3,1,'2024-07-30','15:00:00',NULL);
+INSERT INTO `reservation` VALUES (1,'shakira@cosmeticos.com',1,1,'2024-03-15','08:00:00','lucas@test.com','Completado'),(2,'antorocuzzo@messi.com',1,1,'2024-05-02','08:00:00','lucas@test.com','Completado'),(3,'antorocuzzo@messi.com',2,3,'2024-08-14','10:00:00','messi@imiami.com','Pendiente'),(4,'kent@springfield',3,2,'2024-08-25','11:00:00','cr7@elbicho.com','Pendiente'),(5,'teressa@lashes.com',3,1,'2024-08-23','14:15:00','cr7@elbicho.com','Pendiente'),(6,'cr7@elbicho.com',3,2,'2024-08-14','13:00:00','cr7@elbicho.com','Pendiente'),(7,'messi@imiami.com',1,2,'2024-08-16','16:00:00','lucas@test.com','Pendiente'),(8,'messi@imiami.com',2,2,'2024-08-16','15:45:00','messi@imiami.com','Pendiente');
 /*!40000 ALTER TABLE `reservation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-29 22:03:02
+-- Dump completed on 2024-08-12 20:00:43

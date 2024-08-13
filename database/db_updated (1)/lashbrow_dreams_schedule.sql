@@ -25,13 +25,16 @@ DROP TABLE IF EXISTS `schedule`;
 CREATE TABLE `schedule` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idStore` int NOT NULL,
-  `day` varchar(10) DEFAULT NULL,
-  `schedule` varchar(15) DEFAULT NULL,
-  `status` tinyint DEFAULT NULL,
+  `dayOfWeek` tinyint NOT NULL,
+  `startTime` time NOT NULL,
+  `endTime` time NOT NULL,
+  `type` enum('horario','bloqueo') NOT NULL,
+  `recurrence` tinyint(1) NOT NULL DEFAULT '1',
+  `status` enum('disponible','ocupado') NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_schedule_store_idx` (`idStore`),
-  CONSTRAINT `fk_schedule_store` FOREIGN KEY (`idStore`) REFERENCES `store` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  KEY `fk_store` (`idStore`),
+  CONSTRAINT `fk_store` FOREIGN KEY (`idStore`) REFERENCES `store` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +43,7 @@ CREATE TABLE `schedule` (
 
 LOCK TABLES `schedule` WRITE;
 /*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
+INSERT INTO `schedule` VALUES (1,1,2,'08:00:00','16:30:00','horario',1,'disponible'),(2,1,3,'08:00:00','16:30:00','horario',1,'disponible'),(3,1,4,'08:00:00','16:30:00','horario',1,'disponible'),(4,1,5,'08:00:00','16:30:00','horario',1,'disponible'),(5,2,1,'08:00:00','16:00:00','horario',1,'disponible'),(6,2,2,'08:00:00','16:00:00','horario',1,'disponible'),(7,2,3,'08:00:00','16:00:00','horario',1,'disponible'),(8,2,4,'08:00:00','16:00:00','horario',1,'disponible'),(9,2,5,'08:00:00','12:00:00','horario',1,'disponible'),(10,3,1,'13:00:00','18:00:00','horario',1,'disponible'),(11,3,2,'13:00:00','18:00:00','horario',1,'disponible'),(12,3,3,'13:00:00','18:00:00','horario',1,'disponible'),(13,3,4,'13:00:00','18:00:00','horario',1,'disponible'),(14,3,5,'13:00:00','18:00:00','horario',1,'disponible');
 /*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-29 22:03:01
+-- Dump completed on 2024-08-12 20:00:44

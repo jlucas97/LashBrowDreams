@@ -16,29 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `invoice_total`
+-- Table structure for table `user_store`
 --
 
-DROP TABLE IF EXISTS `invoice_total`;
+DROP TABLE IF EXISTS `user_store`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `invoice_total` (
-  `invoiceId` int NOT NULL,
-  `subtotal` double DEFAULT NULL,
-  `taxAmount` double DEFAULT NULL,
-  `total` double NOT NULL,
-  PRIMARY KEY (`invoiceId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `user_store` (
+  `userEmail` varchar(100) NOT NULL,
+  `storeId` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userEmail_UNIQUE` (`userEmail`),
+  UNIQUE KEY `storeId_UNIQUE` (`storeId`),
+  CONSTRAINT `fk_user_store_store` FOREIGN KEY (`storeId`) REFERENCES `store` (`id`),
+  CONSTRAINT `fk_user_store_user` FOREIGN KEY (`userEmail`) REFERENCES `user` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `invoice_total`
+-- Dumping data for table `user_store`
 --
 
-LOCK TABLES `invoice_total` WRITE;
-/*!40000 ALTER TABLE `invoice_total` DISABLE KEYS */;
-INSERT INTO `invoice_total` VALUES (1,6500,845,7345),(2,18000,2340,20340),(3,15000,1950,16950),(4,19500,2535,22035);
-/*!40000 ALTER TABLE `invoice_total` ENABLE KEYS */;
+LOCK TABLES `user_store` WRITE;
+/*!40000 ALTER TABLE `user_store` DISABLE KEYS */;
+INSERT INTO `user_store` VALUES ('lucas@test.com',1,1),('messi@imiami.com',2,2),('cr7@elbicho.com',3,3);
+/*!40000 ALTER TABLE `user_store` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-29 22:03:02
+-- Dump completed on 2024-08-12 20:00:43

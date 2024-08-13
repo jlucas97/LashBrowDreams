@@ -16,27 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `role`
+-- Table structure for table `subcategory`
 --
 
-DROP TABLE IF EXISTS `role`;
+DROP TABLE IF EXISTS `subcategory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `role` (
+CREATE TABLE `subcategory` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+  `categoryId` int NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `status` tinyint DEFAULT NULL,
+  PRIMARY KEY (`id`,`categoryId`),
+  KEY `fk_subcategory_category_idx` (`categoryId`),
+  CONSTRAINT `fk_subcategory_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `role`
+-- Dumping data for table `subcategory`
 --
 
-LOCK TABLES `role` WRITE;
-/*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'administrador'),(2,'encargado'),(3,'cliente');
-/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+LOCK TABLES `subcategory` WRITE;
+/*!40000 ALTER TABLE `subcategory` DISABLE KEYS */;
+INSERT INTO `subcategory` VALUES (1,1,'insumos de limpieza',NULL),(2,2,'aceites',NULL),(3,1,'sombras',NULL),(4,1,'tintes',NULL),(5,2,'rimel',NULL);
+/*!40000 ALTER TABLE `subcategory` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-07 23:35:56
+-- Dump completed on 2024-08-12 20:00:44

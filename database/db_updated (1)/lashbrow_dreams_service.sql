@@ -16,29 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `agenda`
+-- Table structure for table `service`
 --
 
-DROP TABLE IF EXISTS `agenda`;
+DROP TABLE IF EXISTS `service`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `agenda` (
+CREATE TABLE `service` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `storeId` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `price` float NOT NULL,
+  `time` int DEFAULT NULL,
+  `categoryId` int DEFAULT NULL,
+  `typeId` int DEFAULT NULL,
   `status` tinyint DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_agenda_store_idx` (`storeId`),
-  CONSTRAINT `fk_agenda_store` FOREIGN KEY (`storeId`) REFERENCES `store` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  KEY `fk_service_category_idx` (`categoryId`),
+  KEY `fk_service_type_idx` (`typeId`),
+  CONSTRAINT `fk_service_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`),
+  CONSTRAINT `fk_service_type` FOREIGN KEY (`typeId`) REFERENCES `type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `agenda`
+-- Dumping data for table `service`
 --
 
-LOCK TABLES `agenda` WRITE;
-/*!40000 ALTER TABLE `agenda` DISABLE KEYS */;
-/*!40000 ALTER TABLE `agenda` ENABLE KEYS */;
+LOCK TABLES `service` WRITE;
+/*!40000 ALTER TABLE `service` DISABLE KEYS */;
+INSERT INTO `service` VALUES (1,'Lifting de pestañas','Levantamiento de las pestañas',12000,180,2,1,NULL),(2,'Laminado de cejas',NULL,12000,45,1,3,NULL),(3,'Retoque de pestañas','Para extender el tiempo después de la aplicación de pestañas',5000,30,2,2,NULL);
+/*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-29 22:03:02
+-- Dump completed on 2024-08-12 20:00:43

@@ -16,33 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `invoice`
+-- Table structure for table `invoice_total`
 --
 
-DROP TABLE IF EXISTS `invoice`;
+DROP TABLE IF EXISTS `invoice_total`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `invoice` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `date` datetime DEFAULT NULL,
-  `customerId` varchar(100) NOT NULL,
-  `storeId` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_invoice_customer_idx` (`customerId`),
-  KEY `fk_invoice_store_idx` (`storeId`),
-  CONSTRAINT `fk_invoice_customer` FOREIGN KEY (`customerId`) REFERENCES `user` (`email`),
-  CONSTRAINT `fk_invoice_store` FOREIGN KEY (`storeId`) REFERENCES `store` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `invoice_total` (
+  `invoiceId` int NOT NULL,
+  `subtotal` double DEFAULT NULL,
+  `taxAmount` double DEFAULT NULL,
+  `total` double NOT NULL,
+  PRIMARY KEY (`invoiceId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `invoice`
+-- Dumping data for table `invoice_total`
 --
 
-LOCK TABLES `invoice` WRITE;
-/*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
-INSERT INTO `invoice` VALUES (1,'2024-02-24 00:00:00','kent@springfield',2),(2,'2024-03-15 00:00:00','shakira@cosmeticos.com',1),(3,'2024-04-20 00:00:00','teressa@lashes.com',3),(4,'2024-05-02 00:00:00','antorocuzzo@messi.com',1);
-/*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
+LOCK TABLES `invoice_total` WRITE;
+/*!40000 ALTER TABLE `invoice_total` DISABLE KEYS */;
+INSERT INTO `invoice_total` VALUES (1,6500,845,7345),(2,18000,2340,20340),(3,15000,1950,16950),(4,19500,2535,22035),(5,5000,650,5650),(6,12000,1560,13560),(7,12000,1560,13560),(8,5000,650,5650);
+/*!40000 ALTER TABLE `invoice_total` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-29 22:03:02
+-- Dump completed on 2024-08-12 20:00:44

@@ -30,6 +30,7 @@ CREATE TABLE `store` (
   `address` varchar(200) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `status` tinyint DEFAULT NULL,
+  `city` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COMMENT='			';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -40,7 +41,7 @@ CREATE TABLE `store` (
 
 LOCK TABLES `store` WRITE;
 /*!40000 ALTER TABLE `store` DISABLE KEYS */;
-INSERT INTO `store` VALUES (1,'Alajuela','Tienda principal','22262265','City Mall',NULL,NULL),(2,'San Jose Principal',NULL,'59652358','San Pedro','tsanpedro@lashbrow.com',NULL),(3,'Belen',NULL,NULL,'La Ribera','tbelen@lasbrow.com',1);
+INSERT INTO `store` VALUES (1,'Alajuela','Tienda principal','22262265','City Mall',NULL,NULL,'Alajuela, CR'),(2,'San Jose Principal',NULL,'59652358','San Pedro','tsanpedro@lashbrow.com',NULL,'San José, CR'),(3,'Belen',NULL,NULL,'La Ribera','tbelen@lasbrow.com',1,'Belén, CR');
 /*!40000 ALTER TABLE `store` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-29 22:03:01
+-- Dump completed on 2024-08-12 20:00:43

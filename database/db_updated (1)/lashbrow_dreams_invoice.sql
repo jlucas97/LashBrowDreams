@@ -16,32 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `store`
+-- Table structure for table `invoice`
 --
 
-DROP TABLE IF EXISTS `store`;
+DROP TABLE IF EXISTS `invoice`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `store` (
+CREATE TABLE `invoice` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `description` varchar(200) DEFAULT NULL,
-  `phone` varchar(15) DEFAULT NULL,
-  `address` varchar(200) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `status` tinyint DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COMMENT='			';
+  `date` date DEFAULT NULL,
+  `time` time DEFAULT NULL,
+  `customerId` varchar(100) NOT NULL,
+  `storeId` int NOT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_invoice_customer_idx` (`customerId`),
+  KEY `fk_invoice_store_idx` (`storeId`),
+  CONSTRAINT `fk_invoice_customer` FOREIGN KEY (`customerId`) REFERENCES `user` (`email`),
+  CONSTRAINT `fk_invoice_store` FOREIGN KEY (`storeId`) REFERENCES `store` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `store`
+-- Dumping data for table `invoice`
 --
 
-LOCK TABLES `store` WRITE;
-/*!40000 ALTER TABLE `store` DISABLE KEYS */;
-INSERT INTO `store` VALUES (1,'Alajuela','Tienda principal','22262265','City Mall',NULL,NULL),(2,'San Jose Principal',NULL,'59652358','San Pedro','tsanpedro@lashbrow.com',NULL),(3,'Belen',NULL,NULL,'La Ribera','tbelen@lasbrow.com',1);
-/*!40000 ALTER TABLE `store` ENABLE KEYS */;
+LOCK TABLES `invoice` WRITE;
+/*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
+INSERT INTO `invoice` VALUES (1,'2024-02-24',NULL,'kent@springfield',2,'Facturado'),(2,'2024-03-15',NULL,'shakira@cosmeticos.com',1,'Facturado'),(3,'2024-04-20',NULL,'teressa@lashes.com',3,'Facturado'),(4,'2024-05-02',NULL,'antorocuzzo@messi.com',1,'Facturado'),(5,'2024-08-14','10:00:00','antorocuzzo@messi.com',3,'Proforma'),(6,'2024-08-25','11:00:00','kent@springfield',2,'Proforma'),(7,'2024-08-23','14:15:00','teressa@lashes.com',3,'Proforma'),(8,'2024-08-14','13:00:00','cr7@elbicho.com',2,'Proforma');
+/*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-07 23:35:56
+-- Dump completed on 2024-08-12 20:00:43

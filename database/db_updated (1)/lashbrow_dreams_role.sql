@@ -16,37 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `service`
+-- Table structure for table `role`
 --
 
-DROP TABLE IF EXISTS `service`;
+DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `service` (
+CREATE TABLE `role` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `description` varchar(200) DEFAULT NULL,
-  `price` float NOT NULL,
-  `time` int DEFAULT NULL,
-  `categoryId` int DEFAULT NULL,
-  `typeId` int DEFAULT NULL,
-  `status` tinyint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_service_category_idx` (`categoryId`),
-  KEY `fk_service_type_idx` (`typeId`),
-  CONSTRAINT `fk_service_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`),
-  CONSTRAINT `fk_service_type` FOREIGN KEY (`typeId`) REFERENCES `type` (`id`)
+  `name` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `service`
+-- Dumping data for table `role`
 --
 
-LOCK TABLES `service` WRITE;
-/*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (1,'Lifting de pestañas','Levantamiento de las pestañas',12000,180,2,1,NULL),(2,'Laminado de cejas',NULL,12000,45,1,3,NULL),(3,'Retoque de pestañas','Para extender el tiempo después de la aplicación de pestañas',5000,30,2,2,NULL);
-/*!40000 ALTER TABLE `service` ENABLE KEYS */;
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'administrador'),(2,'encargado'),(3,'cliente');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-07 23:35:56
+-- Dump completed on 2024-08-12 20:00:44

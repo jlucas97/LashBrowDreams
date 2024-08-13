@@ -16,36 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user`
+-- Table structure for table `invoice_detail`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `invoice_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `email` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `phone` varchar(15) DEFAULT NULL,
-  `address` varchar(200) DEFAULT NULL,
-  `birthdate` date DEFAULT NULL,
-  `password` varchar(50) NOT NULL,
-  `roleId` int NOT NULL,
-  `status` tinyint DEFAULT NULL,
-  PRIMARY KEY (`email`),
-  UNIQUE KEY `email_UNIQUE` (`email`),
-  KEY `fk_user_role_idx` (`roleId`),
-  CONSTRAINT `fk_user_role` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`)
+CREATE TABLE `invoice_detail` (
+  `invoiceId` int NOT NULL,
+  `id` int NOT NULL,
+  `serviceId` int DEFAULT NULL,
+  `productId` int DEFAULT NULL,
+  `quantity` float DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  PRIMARY KEY (`invoiceId`,`id`),
+  KEY `fk_invoice_detail_service_idx` (`serviceId`),
+  KEY `fk_invoice_detail_product_idx` (`productId`),
+  CONSTRAINT `fk_invoice_detail_invoice` FOREIGN KEY (`invoiceId`) REFERENCES `invoice` (`id`),
+  CONSTRAINT `fk_invoice_detail_product` FOREIGN KEY (`productId`) REFERENCES `product` (`id`),
+  CONSTRAINT `fk_invoice_detail_service` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `invoice_detail`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('anthony@lashes.com','Anthony','354689675',NULL,NULL,'test',2,1),('antorocuzzo@messi.com','Antonella',NULL,'Miami',NULL,'liomessi',3,1),('kent@springfield','Kent',NULL,'Springfield',NULL,'simpson',3,1),('lucas@test.com','Lucas','87654321',NULL,NULL,'clave',1,1),('shakira@cosmeticos.com','Shakira','4569849625','Barcelona, Hospitalet',NULL,'colombia',3,1),('teressa@lashes.com','Teressa',NULL,'Praga',NULL,'prague',3,1);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `invoice_detail` WRITE;
+/*!40000 ALTER TABLE `invoice_detail` DISABLE KEYS */;
+INSERT INTO `invoice_detail` VALUES (1,1,NULL,1,2,4000),(1,2,NULL,3,1,2500),(2,1,1,NULL,1,12000),(2,2,NULL,1,3,6000),(3,1,NULL,2,2,15000),(4,1,1,NULL,1,12000),(4,2,NULL,4,3,7500),(5,1,3,NULL,1,5000),(6,1,2,NULL,1,12000),(7,1,1,NULL,1,12000),(8,1,3,NULL,1,5000);
+/*!40000 ALTER TABLE `invoice_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-29 22:03:01
+-- Dump completed on 2024-08-12 20:00:43

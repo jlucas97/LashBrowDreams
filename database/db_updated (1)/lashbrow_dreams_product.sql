@@ -16,38 +16,41 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `reservation`
+-- Table structure for table `product`
 --
 
-DROP TABLE IF EXISTS `reservation`;
+DROP TABLE IF EXISTS `product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `reservation` (
+CREATE TABLE `product` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `customerId` varchar(100) NOT NULL,
-  `storeId` int NOT NULL,
-  `serviceId` int DEFAULT NULL,
-  `date` date DEFAULT NULL,
-  `time` time DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `categoryId` int DEFAULT NULL,
+  `subCategoryId` int DEFAULT NULL,
+  `usage` int DEFAULT NULL,
+  `brand` varchar(50) DEFAULT NULL,
+  `price` float NOT NULL,
   `status` tinyint DEFAULT NULL,
+  `providerId` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_reservation_customerid_idx` (`customerId`),
-  KEY `fk_reservation_store_idx` (`storeId`),
-  KEY `fk_reservation_service_idx` (`serviceId`),
-  CONSTRAINT `fk_reservation_customer` FOREIGN KEY (`customerId`) REFERENCES `user` (`email`),
-  CONSTRAINT `fk_reservation_service` FOREIGN KEY (`serviceId`) REFERENCES `service` (`id`),
-  CONSTRAINT `fk_reservation_store` FOREIGN KEY (`storeId`) REFERENCES `store` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+  KEY `fk_product_category_idx` (`categoryId`),
+  KEY `fk_product_subcategory_idx` (`subCategoryId`),
+  KEY `fk_product_provider_idx` (`providerId`),
+  CONSTRAINT `fk_product_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`),
+  CONSTRAINT `fk_product_provider` FOREIGN KEY (`providerId`) REFERENCES `provider` (`id`),
+  CONSTRAINT `fk_product_subcategory` FOREIGN KEY (`subCategoryId`) REFERENCES `subcategory` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `reservation`
+-- Dumping data for table `product`
 --
 
-LOCK TABLES `reservation` WRITE;
-/*!40000 ALTER TABLE `reservation` DISABLE KEYS */;
-INSERT INTO `reservation` VALUES (1,'shakira@cosmeticos.com',1,3,'2024-06-14','14:00:00',NULL),(2,'antorocuzzo@messi.com',1,1,'2024-06-25','10:00:00',NULL),(3,'kent@springfield',2,2,'2024-06-26','11:00:00',NULL),(4,'shakira@cosmeticos.com',3,3,'2024-06-27','12:00:00',NULL),(5,'teressa@lashes.com',1,2,'2024-06-28','13:00:00',NULL),(6,'antorocuzzo@messi.com',2,3,'2024-07-29','14:00:00',NULL),(7,'kent@springfield',3,1,'2024-07-30','15:00:00',NULL);
-/*!40000 ALTER TABLE `reservation` ENABLE KEYS */;
+LOCK TABLES `product` WRITE;
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'Mascarilla desmaquilladora','Ideal para remover el maquillaje',1,1,3,'Peggy Sage',2000,NULL,2),(2,'Aceite para pestañas','Ayuda al crecimiento y alargamiento de las pestañas',2,2,15,'Prosa',7500,NULL,2),(3,'Henna','Tinte especial para cejas',1,4,10,'Rootana',2500,NULL,1),(4,'Rimel','2 tubos, uno para alargar las pestañas y el otro para dar volumen',2,5,15,'Two Step',4000,NULL,3);
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-07 23:35:56
+-- Dump completed on 2024-08-12 20:00:44
