@@ -51,4 +51,16 @@ class UserModel
         $params = [$storeId];
         return $this->link->executeSQL($sql, 'obj', $params);
     }
+
+    public function getUserByEmail($email)
+    {
+        try {
+            $vSQL = "SELECT * FROM user WHERE email = ?";
+            $params = [$email];
+            $result = $this->link->executeSQL($vSQL, 'obj', $params);
+            return $result ? $result[0] : null;
+        } catch (Exception $e) {
+            die("" . $e->getMessage());
+        }
+    }
 }

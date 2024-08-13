@@ -42,6 +42,21 @@ class UserService {
             });
     }
 
+    login(email, password) {
+        return axios.post(`${BASE_URL}/user/login`, {
+            email: email,
+            password: password,
+        })
+        .then(response => {
+            console.log("Login API response:", response);
+            return response.data;
+        })
+        .catch(error => {
+            console.error("Error during login:", error);
+            throw error;
+        });
+    }
+
     
 }
 
