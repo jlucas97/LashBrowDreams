@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,26 +15,43 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
-import axios from "axios";
-import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
+import UserService from "../../services/UserService";
 
-const pages = ["Productos"];
-const restrictedPages = ["Reservas", "Facturación"];
-const adminSettings = ["Perfil", "Mantenimiento", "Gestión", "Cerrar Sesión"];
-const encargadoSettings = ["Perfil", "Cerrar Sesión"];
-const userSettings = ["Iniciar Sesión"];
 const routes = {
   Productos: "/product",
   Reservas: "/reservation",
   Facturación: "/billing",
-};
-const settingsRoutes = {
   Perfil: "/profile",
   Mantenimiento: "/maintenance",
   Gestión: "/management",
-  "Iniciar Sesión": "/login",
 };
+
+function getPagesByRole(role) {
+  const numericRole = Number(role);
+  switch (numericRole) {
+    case 1: // Administrador
+    case 2: // Encargado
+      return ["Productos", "Reservas", "Facturación"];
+    case 3: // Cliente
+      return ["Productos"];
+    default:
+      return ["Productos"];
+  }
+}
+
+function getUserSettings(role) {
+  const numericRole = Number(role);
+  switch (numericRole) {
+    case 1: // Administrador
+    case 2: // Encargado
+      return ["Perfil", "Mantenimiento", "Gestión", "Cerrar Sesión"];
+    case 3: // Cliente
+      return ["Perfil", "Cerrar Sesión"];
+    default:
+      return ["Iniciar Sesión"];
+  }
+}
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -42,58 +60,35 @@ function ResponsiveAppBar() {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
 
-  const userRole = localStorage.getItem("userRole") || "guest";
-  const isUserLoggedIn = userRole !== "guest";
+  const userRole = UserService.getRole(); // Obtén el rol del usuario
+  const isUserLoggedIn = UserService.isLoggedIn(); // Verifica si el usuario está autenticado
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-  const handleLoginClick = () => {
-    setOpenModal(true);
-  };
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
+  const pages = getPagesByRole(userRole); // Obtén las páginas basadas en el rol
+  const settings = getUserSettings(userRole); // Obtén las configuraciones del menú basadas en el rol
+
+  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleCloseNavMenu = () => setAnchorElNav(null);
+  const handleCloseUserMenu = () => setAnchorElUser(null);
+  const handleLoginClick = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   const handleLogin = () => {
-    const data = {
-      email: emailInput,
-      password: passwordInput,
-    };
-
-    axios
-      .post("http://localhost:81/lashbrowdreams/user/login", data)
-      .then((response) => {
-        if (response.data.status === 200) {
-          localStorage.setItem("userToken", response.data.results.token);
-          localStorage.setItem("userRole", response.data.results.user.role);
-          handleCloseModal();
-          window.location.reload(); // Para actualizar la interfaz según el rol
-        } else {
-          alert("Credenciales inválidas");
-        }
+    UserService.login(emailInput, passwordInput)
+      .then(() => {
+        setOpenModal(false);
+        window.location.reload(); // Recarga la página para aplicar los cambios de sesión
       })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Ocurrió un error al iniciar sesión");
-      });
+      .catch((error) => alert(error.message));
   };
 
-  const settings =
-    userRole === "admin"
-      ? adminSettings
-      : userRole === "encargado"
-      ? encargadoSettings
-      : userSettings;
+  const handleLogout = () => {
+    UserService.logout();
+    window.location.reload(); // Recarga la página para aplicar los cambios de sesión
+  };
+
+  console.log("userRole:", userRole);
+  console.log("settings:", settings);
 
   return (
     <>
@@ -161,16 +156,15 @@ function ResponsiveAppBar() {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <MenuItem
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                    component={Link}
+                    to={routes[page]}
+                  >
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ))}
-                {isUserLoggedIn &&
-                  restrictedPages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                  ))}
               </Menu>
             </Box>
             <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -208,32 +202,10 @@ function ResponsiveAppBar() {
                   }}
                   component={Link}
                   to={routes[page]}
-                  color="secondary"
                 >
                   {page}
                 </Button>
               ))}
-              {isUserLoggedIn &&
-                restrictedPages.map((page) => (
-                  <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                    sx={{
-                      my: 2,
-                      color: "white",
-                      display: "block",
-                      "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.1)",
-                        color: "#ffeb3b",
-                      },
-                    }}
-                    component={Link}
-                    to={routes[page]}
-                    color="secondary"
-                  >
-                    {page}
-                  </Button>
-                ))}
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
@@ -263,9 +235,13 @@ function ResponsiveAppBar() {
                     {settings.map((setting) => (
                       <MenuItem
                         key={setting}
-                        onClick={handleCloseUserMenu}
+                        onClick={
+                          setting === "Cerrar Sesión"
+                            ? handleLogout
+                            : handleCloseUserMenu
+                        }
                         component={Link}
-                        to={settingsRoutes[setting]}
+                        to={setting !== "Cerrar Sesión" ? routes[setting] : "#"}
                       >
                         <Typography textAlign="center">{setting}</Typography>
                       </MenuItem>
@@ -334,4 +310,5 @@ function ResponsiveAppBar() {
     </>
   );
 }
+
 export default ResponsiveAppBar;

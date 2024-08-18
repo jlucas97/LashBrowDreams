@@ -10078,3 +10078,745 @@ Stack trace:
 [13-Aug-2024 06:23:49 Europe/Berlin] Método HTTP: GET
 [13-Aug-2024 06:23:49 Europe/Berlin] Controlador: store
 [13-Aug-2024 06:23:49 Europe/Berlin] Acción: index
+[14-Aug-2024 01:49:22 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[14-Aug-2024 01:49:22 Europe/Berlin] Método HTTP: GET
+[14-Aug-2024 01:49:22 Europe/Berlin] Controlador: store
+[14-Aug-2024 01:49:22 Europe/Berlin] Acción: index
+[14-Aug-2024 01:49:23 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[14-Aug-2024 01:49:23 Europe/Berlin] Método HTTP: GET
+[14-Aug-2024 01:49:23 Europe/Berlin] Controlador: store
+[14-Aug-2024 01:49:23 Europe/Berlin] Acción: index
+[14-Aug-2024 03:04:27 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[14-Aug-2024 03:04:27 Europe/Berlin] Método HTTP: GET
+[14-Aug-2024 03:04:27 Europe/Berlin] Controlador: store
+[14-Aug-2024 03:04:27 Europe/Berlin] Acción: index
+[14-Aug-2024 03:04:28 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[14-Aug-2024 03:04:28 Europe/Berlin] Método HTTP: GET
+[14-Aug-2024 03:04:28 Europe/Berlin] Controlador: store
+[14-Aug-2024 03:04:28 Europe/Berlin] Acción: index
+[14-Aug-2024 23:05:30 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[14-Aug-2024 23:05:30 Europe/Berlin] Método HTTP: GET
+[14-Aug-2024 23:05:30 Europe/Berlin] Controlador: store
+[14-Aug-2024 23:05:30 Europe/Berlin] Acción: index
+[14-Aug-2024 23:05:30 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[14-Aug-2024 23:05:30 Europe/Berlin] Método HTTP: GET
+[14-Aug-2024 23:05:30 Europe/Berlin] Controlador: store
+[14-Aug-2024 23:05:30 Europe/Berlin] Acción: index
+[14-Aug-2024 23:38:50 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[14-Aug-2024 23:38:50 Europe/Berlin] Método HTTP: GET
+[14-Aug-2024 23:38:50 Europe/Berlin] Controlador: store
+[14-Aug-2024 23:38:50 Europe/Berlin] Acción: index
+[14-Aug-2024 23:38:50 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[14-Aug-2024 23:38:50 Europe/Berlin] Método HTTP: GET
+[14-Aug-2024 23:38:50 Europe/Berlin] Controlador: store
+[14-Aug-2024 23:38:50 Europe/Berlin] Acción: index
+[16-Aug-2024 16:54:12 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[16-Aug-2024 16:54:12 Europe/Berlin] Método HTTP: GET
+[16-Aug-2024 16:54:12 Europe/Berlin] Controlador: store
+[16-Aug-2024 16:54:12 Europe/Berlin] Acción: index
+[16-Aug-2024 16:54:13 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[16-Aug-2024 16:54:13 Europe/Berlin] Método HTTP: GET
+[16-Aug-2024 16:54:13 Europe/Berlin] Controlador: store
+[16-Aug-2024 16:54:13 Europe/Berlin] Acción: index
+[17-Aug-2024 14:50:03 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[17-Aug-2024 14:50:03 Europe/Berlin] Método HTTP: GET
+[17-Aug-2024 14:50:03 Europe/Berlin] Controlador: store
+[17-Aug-2024 14:50:03 Europe/Berlin] Acción: index
+[17-Aug-2024 14:50:03 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[17-Aug-2024 14:50:03 Europe/Berlin] Método HTTP: GET
+[17-Aug-2024 14:50:03 Europe/Berlin] Controlador: store
+[17-Aug-2024 14:50:03 Europe/Berlin] Acción: index
+[18-Aug-2024 07:04:27 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:04:27 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:04:27 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:04:27 Europe/Berlin] Acción: index
+[18-Aug-2024 07:04:28 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:04:28 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:04:28 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:04:28 Europe/Berlin] Acción: index
+[18-Aug-2024 07:04:36 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:04:36 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:04:36 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:04:36 Europe/Berlin] Acción: index
+[18-Aug-2024 07:04:37 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:04:37 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:04:37 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:04:37 Europe/Berlin] Acción: index
+[18-Aug-2024 07:04:49 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"getAdminByStore","4":"1"}
+[18-Aug-2024 07:04:49 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:04:49 Europe/Berlin] Controlador: user
+[18-Aug-2024 07:04:49 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:04:49 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:04:49 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:04:49 Europe/Berlin] Acción: index
+[18-Aug-2024 07:04:50 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"getAdminByStore","4":"1"}
+[18-Aug-2024 07:04:50 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:04:50 Europe/Berlin] Controlador: user
+[18-Aug-2024 07:12:17 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:12:17 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:17 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:12:17 Europe/Berlin] Acción: index
+[18-Aug-2024 07:12:18 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:12:18 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:18 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:12:18 Europe/Berlin] Acción: index
+[18-Aug-2024 07:12:19 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[18-Aug-2024 07:12:19 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:19 Europe/Berlin] Controlador: product
+[18-Aug-2024 07:12:19 Europe/Berlin] Acción: index
+[18-Aug-2024 07:12:20 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[18-Aug-2024 07:12:20 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:20 Europe/Berlin] Controlador: product
+[18-Aug-2024 07:12:20 Europe/Berlin] Acción: index
+[18-Aug-2024 07:12:21 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"reservation","3":"getReservations","4":"1","5":"customerId="}
+[18-Aug-2024 07:12:21 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:21 Europe/Berlin] Controlador: reservation
+[18-Aug-2024 07:12:22 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"reservation","3":"getReservations","4":"1","5":"customerId="}
+[18-Aug-2024 07:12:22 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:22 Europe/Berlin] Controlador: reservation
+[18-Aug-2024 07:12:23 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"billing","3":"index","4":"1"}
+[18-Aug-2024 07:12:23 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:23 Europe/Berlin] Controlador: billing
+[18-Aug-2024 07:12:24 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"billing","3":"index","4":"1"}
+[18-Aug-2024 07:12:24 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:24 Europe/Berlin] Controlador: billing
+[18-Aug-2024 07:12:35 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:12:35 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:35 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:12:35 Europe/Berlin] Acción: index
+[18-Aug-2024 07:12:35 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:12:35 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:35 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:12:35 Europe/Berlin] Acción: index
+[18-Aug-2024 07:12:40 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"reservation","3":"getReservations","4":"1","5":"customerId="}
+[18-Aug-2024 07:12:40 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:40 Europe/Berlin] Controlador: reservation
+[18-Aug-2024 07:12:41 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"reservation","3":"getReservations","4":"1","5":"customerId="}
+[18-Aug-2024 07:12:41 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:41 Europe/Berlin] Controlador: reservation
+[18-Aug-2024 07:12:42 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"billing","3":"index","4":"1"}
+[18-Aug-2024 07:12:42 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:42 Europe/Berlin] Controlador: billing
+[18-Aug-2024 07:12:42 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"billing","3":"index","4":"1"}
+[18-Aug-2024 07:12:42 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:42 Europe/Berlin] Controlador: billing
+[18-Aug-2024 07:12:43 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[18-Aug-2024 07:12:43 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:43 Europe/Berlin] Controlador: product
+[18-Aug-2024 07:12:43 Europe/Berlin] Acción: index
+[18-Aug-2024 07:12:44 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[18-Aug-2024 07:12:44 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:12:44 Europe/Berlin] Controlador: product
+[18-Aug-2024 07:12:44 Europe/Berlin] Acción: index
+[18-Aug-2024 07:14:57 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:14:57 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:14:57 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:14:57 Europe/Berlin] Acción: index
+[18-Aug-2024 07:14:57 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:14:57 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:14:57 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:14:57 Europe/Berlin] Acción: index
+[18-Aug-2024 07:17:29 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[18-Aug-2024 07:17:29 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:17:29 Europe/Berlin] Controlador: product
+[18-Aug-2024 07:17:29 Europe/Berlin] Acción: index
+[18-Aug-2024 07:17:29 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[18-Aug-2024 07:17:29 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:17:29 Europe/Berlin] Controlador: product
+[18-Aug-2024 07:17:29 Europe/Berlin] Acción: index
+[18-Aug-2024 07:22:47 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:22:47 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:22:47 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:22:47 Europe/Berlin] Acción: index
+[18-Aug-2024 07:22:47 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:22:47 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:22:47 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:22:47 Europe/Berlin] Acción: index
+[18-Aug-2024 07:22:51 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:22:51 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:22:51 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:22:51 Europe/Berlin] Acción: index
+[18-Aug-2024 07:22:52 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:22:52 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:22:52 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:22:52 Europe/Berlin] Acción: index
+[18-Aug-2024 07:23:44 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[18-Aug-2024 07:23:44 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:23:44 Europe/Berlin] Controlador: product
+[18-Aug-2024 07:23:44 Europe/Berlin] Acción: index
+[18-Aug-2024 07:23:44 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[18-Aug-2024 07:23:44 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:23:44 Europe/Berlin] Controlador: product
+[18-Aug-2024 07:23:44 Europe/Berlin] Acción: index
+[18-Aug-2024 07:23:45 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:23:45 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:23:45 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:23:45 Europe/Berlin] Acción: index
+[18-Aug-2024 07:23:46 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:23:46 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:23:46 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:23:46 Europe/Berlin] Acción: index
+[18-Aug-2024 07:24:09 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:24:09 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:24:09 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:24:09 Europe/Berlin] Acción: index
+[18-Aug-2024 07:24:09 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:24:09 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:24:09 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:24:09 Europe/Berlin] Acción: index
+[18-Aug-2024 07:25:22 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"login"}
+[18-Aug-2024 07:25:22 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:25:22 Europe/Berlin] Controlador: user
+[18-Aug-2024 07:25:22 Europe/Berlin] Acción: index
+[18-Aug-2024 07:44:17 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 07:44:17 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 07:44:17 Europe/Berlin] Controlador: store
+[18-Aug-2024 07:44:17 Europe/Berlin] Acción: index
+[18-Aug-2024 08:22:22 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:22:22 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:22:22 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:22:22 Europe/Berlin] Acción: index
+[18-Aug-2024 08:22:22 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:22:22 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:22:22 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:22:22 Europe/Berlin] Acción: index
+[18-Aug-2024 08:24:10 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user"}
+[18-Aug-2024 08:24:10 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:24:10 Europe/Berlin] Controlador: user
+[18-Aug-2024 08:24:10 Europe/Berlin] Acción: index
+[18-Aug-2024 08:24:15 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"2"}
+[18-Aug-2024 08:24:15 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:24:15 Europe/Berlin] Controlador: user
+[18-Aug-2024 08:24:15 Europe/Berlin] Acción: index
+[18-Aug-2024 08:24:31 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"get","4":"2"}
+[18-Aug-2024 08:24:31 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:24:31 Europe/Berlin] Controlador: user
+[18-Aug-2024 08:25:00 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"get","4":"l"}
+[18-Aug-2024 08:25:00 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:25:00 Europe/Berlin] Controlador: user
+[18-Aug-2024 08:25:18 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:25:18 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:25:18 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:25:18 Europe/Berlin] Acción: index
+[18-Aug-2024 08:25:23 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:25:23 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:25:23 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:25:23 Europe/Berlin] Acción: index
+[18-Aug-2024 08:25:23 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:25:23 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:25:23 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:25:23 Europe/Berlin] Acción: index
+[18-Aug-2024 08:26:33 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:26:33 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:26:33 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:26:33 Europe/Berlin] Acción: index
+[18-Aug-2024 08:26:41 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:26:41 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:26:41 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:26:41 Europe/Berlin] Acción: index
+[18-Aug-2024 08:26:42 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:26:42 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:26:42 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:26:42 Europe/Berlin] Acción: index
+[18-Aug-2024 08:32:12 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:32:12 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:32:12 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:32:12 Europe/Berlin] Acción: index
+[18-Aug-2024 08:32:12 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:32:12 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:32:12 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:32:12 Europe/Berlin] Acción: index
+[18-Aug-2024 08:32:40 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:32:40 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:32:40 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:32:40 Europe/Berlin] Acción: index
+[18-Aug-2024 08:32:40 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:32:40 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:32:40 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:32:40 Europe/Berlin] Acción: index
+[18-Aug-2024 08:33:10 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:33:10 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:33:10 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:33:10 Europe/Berlin] Acción: index
+[18-Aug-2024 08:33:11 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:33:11 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:33:11 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:33:11 Europe/Berlin] Acción: index
+[18-Aug-2024 08:35:54 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:35:54 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:35:54 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:35:54 Europe/Berlin] Acción: index
+[18-Aug-2024 08:35:58 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:35:58 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:35:58 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:35:58 Europe/Berlin] Acción: index
+[18-Aug-2024 08:36:01 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:36:01 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:36:01 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:36:01 Europe/Berlin] Acción: index
+[18-Aug-2024 08:36:06 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:36:06 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:36:06 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:36:06 Europe/Berlin] Acción: index
+[18-Aug-2024 08:36:07 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:36:07 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:36:07 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:36:07 Europe/Berlin] Acción: index
+[18-Aug-2024 08:37:58 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:37:58 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:37:58 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:37:58 Europe/Berlin] Acción: index
+[18-Aug-2024 08:38:02 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:38:02 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:38:02 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:38:02 Europe/Berlin] Acción: index
+[18-Aug-2024 08:39:06 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:39:06 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:39:06 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:39:06 Europe/Berlin] Acción: index
+[18-Aug-2024 08:39:06 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:39:06 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:39:06 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:39:06 Europe/Berlin] Acción: index
+[18-Aug-2024 08:39:47 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:39:47 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:39:47 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:39:47 Europe/Berlin] Acción: index
+[18-Aug-2024 08:40:05 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"login"}
+[18-Aug-2024 08:40:05 Europe/Berlin] Método HTTP: POST
+[18-Aug-2024 08:40:05 Europe/Berlin] Controlador: user
+[18-Aug-2024 08:40:05 Europe/Berlin] Acción: create
+[18-Aug-2024 08:40:06 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:40:06 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:40:06 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:40:06 Europe/Berlin] Acción: index
+[18-Aug-2024 08:40:06 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:40:06 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:40:06 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:40:06 Europe/Berlin] Acción: index
+[18-Aug-2024 08:45:15 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:45:15 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:45:15 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:45:15 Europe/Berlin] Acción: index
+[18-Aug-2024 08:48:31 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:48:31 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:48:31 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:48:31 Europe/Berlin] Acción: index
+[18-Aug-2024 08:48:31 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:48:31 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:48:31 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:48:31 Europe/Berlin] Acción: index
+[18-Aug-2024 08:53:47 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:53:47 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:53:47 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:53:47 Europe/Berlin] Acción: index
+[18-Aug-2024 08:53:47 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:53:47 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:53:47 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:53:47 Europe/Berlin] Acción: index
+[18-Aug-2024 08:55:52 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:55:52 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:55:52 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:55:52 Europe/Berlin] Acción: index
+[18-Aug-2024 08:55:52 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:55:52 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:55:52 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:55:52 Europe/Berlin] Acción: index
+[18-Aug-2024 08:56:44 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:56:44 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:56:44 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:56:44 Europe/Berlin] Acción: index
+[18-Aug-2024 08:56:44 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:56:44 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:56:44 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:56:44 Europe/Berlin] Acción: index
+[18-Aug-2024 08:57:24 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:57:24 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:57:24 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:57:24 Europe/Berlin] Acción: index
+[18-Aug-2024 08:57:25 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:57:25 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:57:25 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:57:25 Europe/Berlin] Acción: index
+[18-Aug-2024 08:58:15 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:58:15 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:58:15 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:58:15 Europe/Berlin] Acción: index
+[18-Aug-2024 08:58:15 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 08:58:15 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 08:58:15 Europe/Berlin] Controlador: store
+[18-Aug-2024 08:58:15 Europe/Berlin] Acción: index
+[18-Aug-2024 09:00:54 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:00:54 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:00:54 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:00:54 Europe/Berlin] Acción: index
+[18-Aug-2024 09:00:55 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:00:55 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:00:55 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:00:55 Europe/Berlin] Acción: index
+[18-Aug-2024 09:01:14 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:01:14 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:01:14 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:01:14 Europe/Berlin] Acción: index
+[18-Aug-2024 09:01:14 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:01:14 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:01:14 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:01:14 Europe/Berlin] Acción: index
+[18-Aug-2024 09:13:52 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:13:52 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:13:52 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:13:52 Europe/Berlin] Acción: index
+[18-Aug-2024 09:13:56 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:13:56 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:13:56 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:13:56 Europe/Berlin] Acción: index
+[18-Aug-2024 09:13:56 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:13:56 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:13:56 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:13:56 Europe/Berlin] Acción: index
+[18-Aug-2024 09:14:09 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:14:09 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:14:09 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:14:09 Europe/Berlin] Acción: index
+[18-Aug-2024 09:18:24 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:18:24 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:18:24 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:18:24 Europe/Berlin] Acción: index
+[18-Aug-2024 09:18:25 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:18:25 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:18:25 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:18:25 Europe/Berlin] Acción: index
+[18-Aug-2024 09:23:39 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:23:39 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:23:39 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:23:39 Europe/Berlin] Acción: index
+[18-Aug-2024 09:26:47 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:26:47 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:26:47 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:26:47 Europe/Berlin] Acción: index
+[18-Aug-2024 09:26:50 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 09:26:50 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 09:26:50 Europe/Berlin] Controlador: store
+[18-Aug-2024 09:26:50 Europe/Berlin] Acción: index
+[18-Aug-2024 15:57:25 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 15:57:25 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 15:57:25 Europe/Berlin] Controlador: store
+[18-Aug-2024 15:57:25 Europe/Berlin] Acción: index
+[18-Aug-2024 15:57:26 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[18-Aug-2024 15:57:26 Europe/Berlin] Método HTTP: GET
+[18-Aug-2024 15:57:26 Europe/Berlin] Controlador: store
+[18-Aug-2024 15:57:26 Europe/Berlin] Acción: index
+[19-Aug-2024 01:00:42 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:00:42 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:00:42 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:00:42 Europe/Berlin] Acción: index
+[19-Aug-2024 01:00:42 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:00:42 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:00:42 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:00:42 Europe/Berlin] Acción: index
+[19-Aug-2024 01:01:57 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:01:57 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:01:57 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:01:57 Europe/Berlin] Acción: index
+[19-Aug-2024 01:01:57 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:01:57 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:01:57 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:01:57 Europe/Berlin] Acción: index
+[19-Aug-2024 01:02:03 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[19-Aug-2024 01:02:03 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:02:03 Europe/Berlin] Controlador: product
+[19-Aug-2024 01:02:03 Europe/Berlin] Acción: index
+[19-Aug-2024 01:02:03 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"product"}
+[19-Aug-2024 01:02:03 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:02:03 Europe/Berlin] Controlador: product
+[19-Aug-2024 01:02:03 Europe/Berlin] Acción: index
+[19-Aug-2024 01:02:06 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:02:06 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:02:06 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:02:06 Europe/Berlin] Acción: index
+[19-Aug-2024 01:02:06 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:02:06 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:02:06 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:02:06 Europe/Berlin] Acción: index
+[19-Aug-2024 01:02:16 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"login"}
+[19-Aug-2024 01:02:16 Europe/Berlin] Método HTTP: POST
+[19-Aug-2024 01:02:16 Europe/Berlin] Controlador: user
+[19-Aug-2024 01:02:16 Europe/Berlin] Acción: create
+[19-Aug-2024 01:02:17 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:02:17 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:02:17 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:02:17 Europe/Berlin] Acción: index
+[19-Aug-2024 01:02:18 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:02:18 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:02:18 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:02:18 Europe/Berlin] Acción: index
+[19-Aug-2024 01:03:23 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:03:23 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:03:23 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:03:23 Europe/Berlin] Acción: index
+[19-Aug-2024 01:03:23 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:03:23 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:03:23 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:03:23 Europe/Berlin] Acción: index
+[19-Aug-2024 01:14:29 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"schedule","3":"getSchedulesByStore","4":"1"}
+[19-Aug-2024 01:14:29 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:14:29 Europe/Berlin] Controlador: schedule
+[19-Aug-2024 01:14:29 Europe/Berlin] Schedules found: Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [idStore] => 1
+            [dayOfWeek] => 2
+            [startTime] => 08:00:00
+            [endTime] => 16:30:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [idStore] => 1
+            [dayOfWeek] => 3
+            [startTime] => 08:00:00
+            [endTime] => 16:30:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [2] => Array
+        (
+            [id] => 3
+            [idStore] => 1
+            [dayOfWeek] => 4
+            [startTime] => 08:00:00
+            [endTime] => 16:30:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [3] => Array
+        (
+            [id] => 4
+            [idStore] => 1
+            [dayOfWeek] => 5
+            [startTime] => 08:00:00
+            [endTime] => 16:30:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+)
+
+[19-Aug-2024 01:14:29 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"schedule","3":"getSchedulesByStore","4":"1"}
+[19-Aug-2024 01:14:29 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:14:29 Europe/Berlin] Controlador: schedule
+[19-Aug-2024 01:14:29 Europe/Berlin] Schedules found: Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [idStore] => 1
+            [dayOfWeek] => 2
+            [startTime] => 08:00:00
+            [endTime] => 16:30:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [idStore] => 1
+            [dayOfWeek] => 3
+            [startTime] => 08:00:00
+            [endTime] => 16:30:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [2] => Array
+        (
+            [id] => 3
+            [idStore] => 1
+            [dayOfWeek] => 4
+            [startTime] => 08:00:00
+            [endTime] => 16:30:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [3] => Array
+        (
+            [id] => 4
+            [idStore] => 1
+            [dayOfWeek] => 5
+            [startTime] => 08:00:00
+            [endTime] => 16:30:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+)
+
+[19-Aug-2024 01:14:41 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:14:41 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:14:41 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:14:41 Europe/Berlin] Acción: index
+[19-Aug-2024 01:14:42 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:14:42 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:14:42 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:14:42 Europe/Berlin] Acción: index
+[19-Aug-2024 01:14:44 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"getAdminByStore","4":"3"}
+[19-Aug-2024 01:14:44 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:14:44 Europe/Berlin] Controlador: user
+[19-Aug-2024 01:14:44 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"store"}
+[19-Aug-2024 01:14:44 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:14:44 Europe/Berlin] Controlador: store
+[19-Aug-2024 01:14:44 Europe/Berlin] Acción: index
+[19-Aug-2024 01:14:45 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"user","3":"getAdminByStore","4":"3"}
+[19-Aug-2024 01:14:45 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:14:45 Europe/Berlin] Controlador: user
+[19-Aug-2024 01:14:56 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"schedule","3":"getSchedulesByStore","4":"3"}
+[19-Aug-2024 01:14:56 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:14:56 Europe/Berlin] Controlador: schedule
+[19-Aug-2024 01:14:56 Europe/Berlin] Schedules found: Array
+(
+    [0] => Array
+        (
+            [id] => 10
+            [idStore] => 3
+            [dayOfWeek] => 1
+            [startTime] => 13:00:00
+            [endTime] => 18:00:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [1] => Array
+        (
+            [id] => 11
+            [idStore] => 3
+            [dayOfWeek] => 2
+            [startTime] => 13:00:00
+            [endTime] => 18:00:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [2] => Array
+        (
+            [id] => 12
+            [idStore] => 3
+            [dayOfWeek] => 3
+            [startTime] => 13:00:00
+            [endTime] => 18:00:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [3] => Array
+        (
+            [id] => 13
+            [idStore] => 3
+            [dayOfWeek] => 4
+            [startTime] => 13:00:00
+            [endTime] => 18:00:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [4] => Array
+        (
+            [id] => 14
+            [idStore] => 3
+            [dayOfWeek] => 5
+            [startTime] => 13:00:00
+            [endTime] => 18:00:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+)
+
+[19-Aug-2024 01:14:56 Europe/Berlin] Rutas analizadas: {"1":"lashbrowdreams","2":"schedule","3":"getSchedulesByStore","4":"3"}
+[19-Aug-2024 01:14:56 Europe/Berlin] Método HTTP: GET
+[19-Aug-2024 01:14:56 Europe/Berlin] Controlador: schedule
+[19-Aug-2024 01:14:56 Europe/Berlin] Schedules found: Array
+(
+    [0] => Array
+        (
+            [id] => 10
+            [idStore] => 3
+            [dayOfWeek] => 1
+            [startTime] => 13:00:00
+            [endTime] => 18:00:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [1] => Array
+        (
+            [id] => 11
+            [idStore] => 3
+            [dayOfWeek] => 2
+            [startTime] => 13:00:00
+            [endTime] => 18:00:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [2] => Array
+        (
+            [id] => 12
+            [idStore] => 3
+            [dayOfWeek] => 3
+            [startTime] => 13:00:00
+            [endTime] => 18:00:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [3] => Array
+        (
+            [id] => 13
+            [idStore] => 3
+            [dayOfWeek] => 4
+            [startTime] => 13:00:00
+            [endTime] => 18:00:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+    [4] => Array
+        (
+            [id] => 14
+            [idStore] => 3
+            [dayOfWeek] => 5
+            [startTime] => 13:00:00
+            [endTime] => 18:00:00
+            [type] => horario
+            [recurrence] => 1
+            [status] => disponible
+        )
+
+)
+

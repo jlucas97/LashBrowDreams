@@ -4,10 +4,7 @@ const BASE_URL = "http://localhost:81/lashbrowdreams";
 class UserService {
     getUserOnSearchBar(id) {
         return axios.get(`${BASE_URL}/user/get/${id}`)
-            .then(response => {
-                console.log("User API response:", response); // Log the API response
-                return response.data;
-            })
+            .then(response => response.data)
             .catch(error => {
                 console.error("Error al obtener el usuario:", error);
                 throw error;
@@ -32,10 +29,7 @@ class UserService {
 
     getAdminByStore(storeId) {
         return axios.get(`${BASE_URL}/user/getAdminByStore/${storeId}`)
-            .then(response => {
-                console.log("Admin API response:", response); // Log the API response
-                return response.data;
-            })
+            .then(response => response.data)
             .catch(error => {
                 console.error("Error al obtener el administrador:", error);
                 throw error;
@@ -43,21 +37,34 @@ class UserService {
     }
 
     login(email, password) {
-        return axios.post(`${BASE_URL}/user/login`, {
-            email: email,
-            password: password,
-        })
-        .then(response => {
-            console.log("Login API response:", response);
-            return response.data;
-        })
-        .catch(error => {
-            console.error("Error during login:", error);
-            throw error;
-        });
+        return axios.post(`${BASE_URL}/user/login`, { email, password })
+            .then(response => {
+                if (response.data.status === 200) {
+                    localStorage.setItem("userToken", response.data.results.token);
+                    localStorage.setItem("userRole", response.data.results.user.roleId);
+                    return response.data.results.user.roleId;
+                } else {
+                    throw new Error("Credenciales inválidas");
+                }
+            })
+            .catch(error => {
+                console.error("Error during login:", error);
+                throw error;
+            });
     }
 
-    
+    logout() {
+        localStorage.removeItem("userToken");
+        localStorage.removeItem("userRole");
+    }
+
+    getRole() {
+        return localStorage.getItem("userRole") || "guest";
+    }
+
+    isLoggedIn() {
+        return this.getRole() !== "guest";
+    }
 }
 
 export default new UserService();
