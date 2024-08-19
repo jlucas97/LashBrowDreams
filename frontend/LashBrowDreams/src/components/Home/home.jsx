@@ -2,7 +2,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { FormControl, InputLabel, Select, MenuItem, Box } from "@mui/material";
 import StoreServices from "../../services/StoreServices";
-import UserService from "../../services/UserService"; // Importa el servicio de usuario
+import UserService from "../../services/UserService";
 import { useEffect, useState } from "react";
 
 export function Home() {
@@ -19,9 +19,19 @@ export function Home() {
   const [weatherData, setWeatherData] = useState(null);
 
   useEffect(() => {
+    const userRole = UserService.getRole();
+
+    if (userRole === "1" || userRole === "2") {
+      const userName = UserService.getUserName();
+      const userEmail = UserService.getUserEmail();
+      if (userName && userEmail) {
+        localStorage.setItem("adminName", userName);
+        localStorage.setItem("adminEmail", userEmail);
+      }
+    }
+
     StoreServices.getStores()
       .then((response) => {
-        console.log("Sucursales:", response);
         const mappedStores = response.data.results.map((store) => ({
           id: store.id,
           name: store.name,
@@ -29,7 +39,6 @@ export function Home() {
         }));
         setStores(mappedStores);
 
-        
         const initialStoreId = selectedStoreId || defaultStoreId;
         const selectedStore = mappedStores.find(
           (store) => store.id === initialStoreId
@@ -41,7 +50,6 @@ export function Home() {
             city: selectedStore.city,
           });
           fetchWeatherData(selectedStore.city);
-          fetchAdminByStore(selectedStore.id); 
         }
       })
       .catch((error) => {
@@ -60,34 +68,17 @@ export function Home() {
         name: selectedStore.name,
         city: selectedStore.city,
       });
-      setSelectedStoreId(selectedStore.id);
       fetchWeatherData(selectedStore.city);
-      fetchAdminByStore(selectedStore.id); 
     }
   };
 
   const fetchWeatherData = (city) => {
     StoreServices.getWeather(city)
       .then((response) => {
-        console.log("Weather data:", response.data);
         setWeatherData(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener los datos del clima:", error);
-      });
-  };
-
-  const fetchAdminByStore = (storeId) => {
-    UserService.getAdminByStore(storeId)
-      .then((response) => {
-        if (response.results && response.results.length > 0) {
-          const admin = response.results[0];
-          localStorage.setItem("adminName", admin.name);
-          localStorage.setItem("adminEmail", admin.email);
-        }
-      })
-      .catch((error) => {
-        console.error("Error al obtener el admin:", error);
       });
   };
 

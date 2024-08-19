@@ -40,3 +40,18 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.rbc-event {
+  position: relative;
+}
+
+.rbc-event-reserva {
+  z-index: 10; /* Asegura que las reservas estén por encima */
+  background-color: green !important; /* Verde para reservas */
+}
+
+.rbc-event-horario {
+  z-index: 1; /* Horarios por debajo */
+  background-color: blue !important; /* Azul para horarios */
+}

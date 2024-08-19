@@ -59,4 +59,30 @@ class ScheduleModel
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
+
+    public function getSchedulesByDay($idStore, $dayOfWeek)
+    {
+        $sql = "SELECT * FROM schedule WHERE idStore = ? AND dayOfWeek = ? ORDER BY startTime ASC";
+        $stmt = $this->link->prepare($sql);
+        $stmt->bind_param("ii", $idStore, $dayOfWeek);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Definir el método getReservationsByDay en el modelo ScheduleModel
+    public function getReservationsByDay($storeId, $dayOfWeek)
+    {
+        $sql = "
+        SELECT r.*
+        FROM reservation r
+        JOIN schedule s ON r.storeId = s.idStore
+        WHERE r.storeId = ? AND WEEKDAY(r.date) = ?
+    ";
+        $stmt = $this->link->prepare($sql);
+        $stmt->bind_param("ii", $storeId, $dayOfWeek);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }

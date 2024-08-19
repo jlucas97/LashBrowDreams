@@ -40,30 +40,63 @@ class UserService {
         return axios.post(`${BASE_URL}/user/login`, { email, password })
             .then(response => {
                 if (response.data.status === 200) {
-                    localStorage.setItem("userToken", response.data.results.token);
-                    localStorage.setItem("userRole", response.data.results.user.roleId);
-                    return response.data.results.user.roleId;
+                    const { token, user } = response.data.results;
+                    localStorage.setItem("userToken", token);
+                    localStorage.setItem("userRole", user.roleId);
+                    localStorage.setItem("userEmail", user.email);
+                    localStorage.setItem("userName", user.name);
+    
+                    if (user.roleId === 1 || user.roleId === 2) {
+                        localStorage.setItem("adminEmail", user.email);
+                        localStorage.setItem("adminName", user.name);
+                    }
+                    return user.roleId;
                 } else {
                     throw new Error("Credenciales inválidas");
                 }
             })
             .catch(error => {
-                console.error("Error during login:", error);
+                console.error("Error durante el inicio de sesión:", error);
                 throw error;
             });
     }
+    
 
     logout() {
         localStorage.removeItem("userToken");
         localStorage.removeItem("userRole");
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("adminEmail");
+        localStorage.removeItem("adminName");
     }
 
     getRole() {
-        return localStorage.getItem("userRole") || "guest";
+        const role = localStorage.getItem("userRole");
+        return role ? role : "guest";
     }
+    
 
     isLoggedIn() {
-        return this.getRole() !== "guest";
+        const role = this.getRole();
+        return role !== "guest" && role !== null && role !== undefined;
+    }
+    
+
+    getUserEmail() {
+        return localStorage.getItem("userEmail");
+    }
+
+    getUserName() {
+        return localStorage.getItem("userName");
+    }
+
+    getAdminEmail() {
+        return localStorage.getItem("adminEmail");
+    }
+
+    getAdminName() {
+        return localStorage.getItem("adminName");
     }
 }
 

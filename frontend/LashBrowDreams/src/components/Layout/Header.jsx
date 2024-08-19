@@ -12,10 +12,9 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserService from "../../services/UserService";
 
 const routes = {
@@ -59,12 +58,15 @@ function ResponsiveAppBar() {
   const [openModal, setOpenModal] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const navigate = useNavigate();
 
-  const userRole = UserService.getRole(); // Obtén el rol del usuario
-  const isUserLoggedIn = UserService.isLoggedIn(); // Verifica si el usuario está autenticado
+  const userRole = UserService.getRole(); 
+  const isUserLoggedIn = UserService.isLoggedIn(); 
+  const userEmail = UserService.getUserEmail();
+  const userName = UserService.getUserName();
 
-  const pages = getPagesByRole(userRole); // Obtén las páginas basadas en el rol
-  const settings = getUserSettings(userRole); // Obtén las configuraciones del menú basadas en el rol
+  const pages = getPagesByRole(userRole); 
+  const settings = getUserSettings(userRole); 
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
@@ -75,20 +77,20 @@ function ResponsiveAppBar() {
 
   const handleLogin = () => {
     UserService.login(emailInput, passwordInput)
-      .then(() => {
-        setOpenModal(false);
-        window.location.reload(); // Recarga la página para aplicar los cambios de sesión
-      })
-      .catch((error) => alert(error.message));
-  };
+        .then(() => {
+            console.log("userRole after login:", localStorage.getItem("userRole")); // Verifica el valor aquí
+            setOpenModal(false);
+            window.location.reload();
+        })
+        .catch((error) => alert(error.message));
+};
+
 
   const handleLogout = () => {
     UserService.logout();
-    window.location.reload(); // Recarga la página para aplicar los cambios de sesión
+    navigate("/");
+    window.location.reload();
   };
-
-  console.log("userRole:", userRole);
-  console.log("settings:", settings);
 
   return (
     <>
@@ -167,7 +169,7 @@ function ResponsiveAppBar() {
                 ))}
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+            <MenuIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
@@ -211,9 +213,12 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 0 }}>
               {isUserLoggedIn ? (
                 <>
-                  <Tooltip title="Open settings">
+                  <Tooltip title={`Sesión iniciada como ${userName || userEmail}`}>
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt="L" src="/static/images/avatar/2.jpg" />
+                      <Avatar
+                        alt={userName || userEmail}
+                        src="/static/images/avatar/2.jpg"
+                      />
                     </IconButton>
                   </Tooltip>
                   <Menu
@@ -241,7 +246,9 @@ function ResponsiveAppBar() {
                             : handleCloseUserMenu
                         }
                         component={Link}
-                        to={setting !== "Cerrar Sesión" ? routes[setting] : "#"}
+                        to={
+                          setting !== "Cerrar Sesión" ? routes[setting] : "#"
+                        }
                       >
                         <Typography textAlign="center">{setting}</Typography>
                       </MenuItem>
