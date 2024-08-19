@@ -63,4 +63,15 @@ class UserModel
             die("" . $e->getMessage());
         }
     }
+
+    public function isUserAssociatedWithStore($email, $storeId)
+    {
+        $query = "SELECT COUNT(*) as count FROM user_store WHERE userEmail = ? AND storeId = ?";
+        $stmt = $this->link->prepare($query);
+        $stmt->bind_param("si", $email, $storeId);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+
+        return $result['count'] > 0;
+    }
 }

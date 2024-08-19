@@ -55,14 +55,14 @@ export function ScheduleMaintenance() {
   const fetchSchedulesAndReservations = useCallback(
     (storeId) => {
       const formattedEvents = [];
-
+  
       ScheduleService.getSchedulesByStore(storeId)
         .then((scheduleResponse) => {
           if (Array.isArray(scheduleResponse)) {
             scheduleResponse.forEach((schedule) => {
               const weekStartDate = startOfWeek(date, { weekStartsOn: 1 });
               const eventDate = addDays(weekStartDate, schedule.dayOfWeek - 1);
-
+  
               const [startHour, startMinute] = schedule.startTime
                 .split(":")
                 .map(Number);
@@ -73,7 +73,7 @@ export function ScheduleMaintenance() {
                 startHour,
                 startMinute
               );
-
+  
               const [endHour, endMinute] = schedule.endTime
                 .split(":")
                 .map(Number);
@@ -84,7 +84,7 @@ export function ScheduleMaintenance() {
                 endHour,
                 endMinute
               );
-
+  
               formattedEvents.push({
                 id: schedule.id,
                 title:
@@ -98,7 +98,7 @@ export function ScheduleMaintenance() {
               });
             });
           }
-
+  
           return ReservationServices.getReservationsByStoreAndUser(storeId);
         })
         .then((reservationResponse) => {
@@ -108,7 +108,7 @@ export function ScheduleMaintenance() {
               const [startHour, startMinute] = reservation.time
                 .split(":")
                 .map(Number);
-
+  
               const startDate = new Date(
                 reservationDate.getFullYear(),
                 reservationDate.getMonth(),
@@ -116,20 +116,21 @@ export function ScheduleMaintenance() {
                 startHour,
                 startMinute
               );
-
+  
               const endDate = new Date(startDate);
               endDate.setHours(startDate.getHours() + 1);
-
+  
               formattedEvents.push({
                 id: reservation.id,
-                title: "Reservado",
+                title: `Reservado - ${reservation.status}`,
                 start: startDate,
                 end: endDate,
                 allDay: false,
                 resource: "reserva",
+                status: reservation.status, 
               });
             });
-
+  
             setEvents(formattedEvents);
           }
         })
@@ -137,6 +138,7 @@ export function ScheduleMaintenance() {
     },
     [date]
   );
+  
 
   const handleStoreChange = (event) => {
     const selectedStoreId = event.target.value;
@@ -242,7 +244,7 @@ export function ScheduleMaintenance() {
   };
 
   return (
-    <div style={{ paddingTop: "70px", paddingRight: "340px" }}>
+    <div style={{ paddingTop: "70px", paddingRight: "700px", paddingLeft: "0" }}>
       {userRole === "1" && (
         <div style={{ marginBottom: "20px" }}>
           <label>Seleccionar Sucursal:</label>
@@ -255,7 +257,7 @@ export function ScheduleMaintenance() {
           </select>
         </div>
       )}
-      <div style={{ height: "80vh", width: "130%" }}>
+      <div style={{ height: "80vh", width: "180%" }}>
         <DragAndDropCalendar
           localizer={localizer}
           events={events}

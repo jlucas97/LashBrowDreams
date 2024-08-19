@@ -16,12 +16,14 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { Link, useNavigate } from "react-router-dom";
 import UserService from "../../services/UserService";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const routes = {
   Productos: "/product",
   Reservas: "/reservation",
   Facturación: "/billing",
-  Perfil: "/profile",
+  Catálogo: "/product",
   Mantenimiento: "/maintenance",
   Gestión: "/management",
 };
@@ -33,7 +35,7 @@ function getPagesByRole(role) {
     case 2: // Encargado
       return ["Productos", "Reservas", "Facturación"];
     case 3: // Cliente
-      return ["Productos"];
+      return ["Productos", "Reservas"];
     default:
       return ["Productos"];
   }
@@ -44,9 +46,9 @@ function getUserSettings(role) {
   switch (numericRole) {
     case 1: // Administrador
     case 2: // Encargado
-      return ["Perfil", "Mantenimiento", "Gestión", "Cerrar Sesión"];
+      return ["Catálogo", "Mantenimiento", "Gestión", "Cerrar Sesión"];
     case 3: // Cliente
-      return ["Perfil", "Cerrar Sesión"];
+      return ["Catálogo", "Cerrar Sesión"];
     default:
       return ["Iniciar Sesión"];
   }
@@ -76,15 +78,34 @@ function ResponsiveAppBar() {
   const handleCloseModal = () => setOpenModal(false);
 
   const handleLogin = () => {
-    UserService.login(emailInput, passwordInput)
-        .then(() => {
-            console.log("userRole after login:", localStorage.getItem("userRole")); // Verifica el valor aquí
-            setOpenModal(false);
-            window.location.reload();
-        })
-        .catch((error) => alert(error.message));
-};
-
+    const storeId = localStorage.getItem("selectedStoreId");
+  
+    UserService.login(emailInput, passwordInput, storeId)
+      .then(() => {
+        setOpenModal(false);
+        toast.success("Inicio de sesión exitoso", {
+          position: "top-right"
+        });
+        window.location.reload();
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 403) {
+          toast.error("El usuario no pertenece a esta sucursal", {
+            position: "top-right"
+          });
+        } else if (error.response && error.response.status === 401) {
+          toast.error("Credenciales inválidas", {
+            position: "top-right"
+          });
+        } else {
+          toast.error("Error inesperado durante el inicio de sesión", {
+            position: "top-right"
+          });
+        }
+        setOpenModal(false);
+      });
+  };
+  
 
   const handleLogout = () => {
     UserService.logout();
@@ -314,6 +335,8 @@ function ResponsiveAppBar() {
           </Button>
         </Box>
       </Modal>
+
+      <ToastContainer />
     </>
   );
 }

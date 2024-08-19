@@ -36,8 +36,8 @@ class UserService {
             });
     }
 
-    login(email, password) {
-        return axios.post(`${BASE_URL}/user/login`, { email, password })
+    login(email, password, storeId ) {
+        return axios.post(`${BASE_URL}/user/login`, { email, password, storeId })
             .then(response => {
                 if (response.data.status === 200) {
                     const { token, user } = response.data.results;
