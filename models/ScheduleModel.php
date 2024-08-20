@@ -38,19 +38,20 @@ class ScheduleModel
     }
 
     public function updateSchedule($id, $data)
-    {
-        // Construye la consulta SQL para actualizar el horario
-        $sql = "UPDATE schedule SET startTime = ?, endTime = ?, type = ? WHERE id = ?";
-
-        $params = [
-            $data['startTime'],
-            $data['endTime'],
-            $data['type'],
-            $id
-        ];
-
-        return $this->link->executeSQL($sql, 'update', $params);
+{
+    if (!isset($data['startTime']) || !isset($data['endTime'])) {
+        throw new Exception("Los valores de inicio y fin son necesarios");
     }
+
+    // Extraer y convertir los tiempos
+
+    $sql = "UPDATE schedule SET startTime = ?, endTime = ?, type = ? WHERE id = ?";
+    $params = [$data['startTime'], $data['endTime'], $data['type'], $id];
+
+    return $this->link->executeSQL($sql, 'update', $params);
+}
+
+
 
     public function deleteSchedule($id)
     {

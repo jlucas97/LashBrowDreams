@@ -55,14 +55,14 @@ export function ScheduleMaintenance() {
   const fetchSchedulesAndReservations = useCallback(
     (storeId) => {
       const formattedEvents = [];
-  
+
       ScheduleService.getSchedulesByStore(storeId)
         .then((scheduleResponse) => {
           if (Array.isArray(scheduleResponse)) {
             scheduleResponse.forEach((schedule) => {
               const weekStartDate = startOfWeek(date, { weekStartsOn: 1 });
               const eventDate = addDays(weekStartDate, schedule.dayOfWeek - 1);
-  
+
               const [startHour, startMinute] = schedule.startTime
                 .split(":")
                 .map(Number);
@@ -73,7 +73,7 @@ export function ScheduleMaintenance() {
                 startHour,
                 startMinute
               );
-  
+
               const [endHour, endMinute] = schedule.endTime
                 .split(":")
                 .map(Number);
@@ -84,7 +84,7 @@ export function ScheduleMaintenance() {
                 endHour,
                 endMinute
               );
-  
+
               formattedEvents.push({
                 id: schedule.id,
                 title:
@@ -98,7 +98,7 @@ export function ScheduleMaintenance() {
               });
             });
           }
-  
+
           return ReservationServices.getReservationsByStoreAndUser(storeId);
         })
         .then((reservationResponse) => {
@@ -108,7 +108,7 @@ export function ScheduleMaintenance() {
               const [startHour, startMinute] = reservation.time
                 .split(":")
                 .map(Number);
-  
+
               const startDate = new Date(
                 reservationDate.getFullYear(),
                 reservationDate.getMonth(),
@@ -116,10 +116,10 @@ export function ScheduleMaintenance() {
                 startHour,
                 startMinute
               );
-  
+
               const endDate = new Date(startDate);
               endDate.setHours(startDate.getHours() + 1);
-  
+
               formattedEvents.push({
                 id: reservation.id,
                 title: `Reservado - ${reservation.status}`,
@@ -127,10 +127,10 @@ export function ScheduleMaintenance() {
                 end: endDate,
                 allDay: false,
                 resource: "reserva",
-                status: reservation.status, 
+                status: reservation.status,
               });
             });
-  
+
             setEvents(formattedEvents);
           }
         })
@@ -138,7 +138,6 @@ export function ScheduleMaintenance() {
     },
     [date]
   );
-  
 
   const handleStoreChange = (event) => {
     const selectedStoreId = event.target.value;
@@ -149,35 +148,83 @@ export function ScheduleMaintenance() {
 
   const handleEventResize = ({ event, start, end }) => {
     if (event.resource === "horario") {
-      const confirmation = window.confirm(
-        "Está a punto de modificar un horario fijo. ¿Desea continuar?"
-      );
-      if (!confirmation) return;
+        const confirmation = window.confirm(
+            "Está a punto de modificar un horario fijo. ¿Desea continuar?"
+        );
+        if (!confirmation) return;
     }
-    const nextEvents = events.map((existingEvent) =>
-      existingEvent.id === event.id
-        ? { ...existingEvent, start, end }
-        : existingEvent
-    );
-    setEvents(nextEvents);
-    updateScheduleOnServer(event.id, start, end);
-  };
 
-  const handleEventDrop = ({ event, start, end }) => {
-    if (event.resource === "horario") {
-      const confirmation = window.confirm(
-        "Está a punto de mover un horario fijo. ¿Desea continuar?"
-      );
-      if (!confirmation) return;
-    }
-    const nextEvents = events.map((existingEvent) =>
-      existingEvent.id === event.id
-        ? { ...existingEvent, start, end }
-        : existingEvent
-    );
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+  
+    const startT = format(startDate, 'HH:mm:ss');
+    const endT = format(endDate, 'HH:mm:ss');
+  
+    const nextEvents = events.map((existingEvent) => {
+        if (existingEvent.id === event.id) {
+            return { ...existingEvent, start, end };
+        } else if (
+            existingEvent.resource !== event.resource && // Tipo contrario (horario/bloqueo)
+            existingEvent.start < end && // Solapa con el nuevo final del evento modificado
+            existingEvent.end > start // Solapa con el nuevo inicio del evento modificado
+        ) {
+            // Ajustar el evento contrario (bloqueo)
+            if (existingEvent.start < start) {
+                return {
+                    ...existingEvent,
+                    end: start, // Ajusta el fin del bloqueo
+                };
+            } else {
+                return {
+                    ...existingEvent,
+                    start: end, // Ajusta el inicio del bloqueo
+                };
+            }
+        }
+        return existingEvent;
+    });
+  
     setEvents(nextEvents);
-    updateScheduleOnServer(event.id, start, end);
-  };
+    updateScheduleOnServer(event.id, startT, endT, event.resource);
+};
+  
+const handleEventDrop = ({ event, start, end }) => {
+    if (event.resource === "horario") {
+        const confirmation = window.confirm(
+            "Está a punto de mover un horario fijo. ¿Desea continuar?"
+        );
+        if (!confirmation) return;
+    }
+  
+    const nextEvents = events.map((existingEvent) => {
+        if (existingEvent.id === event.id) {
+            return { ...existingEvent, start, end };
+        } else if (
+            existingEvent.resource !== event.resource && // Tipo contrario (horario/bloqueo)
+            existingEvent.start < end && // Solapa con el nuevo final del evento modificado
+            existingEvent.end > start // Solapa con el nuevo inicio del evento modificado
+        ) {
+            // Ajustar el evento contrario (bloqueo)
+            if (existingEvent.start < start) {
+                return {
+                    ...existingEvent,
+                    end: start, // Ajusta el fin del bloqueo
+                };
+            } else {
+                return {
+                    ...existingEvent,
+                    start: end, // Ajusta el inicio del bloqueo
+                };
+            }
+        }
+        return existingEvent;
+    });
+  
+    setEvents(nextEvents);
+    updateScheduleOnServer(event.id, start, end, event.resource);
+};
+
+  
 
   const handleSelectSlot = ({ start, end }) => {
     const title = window.prompt("Ingrese un título para este horario");
@@ -206,11 +253,11 @@ export function ScheduleMaintenance() {
     }
   };
 
-  const updateScheduleOnServer = (eventId, start, end) => {
-    ScheduleService.updateSchedule(eventId, { start, end })
+  const updateScheduleOnServer = (eventId, startTime, endTime, type) => {
+    ScheduleService.updateSchedule(eventId, { startTime, endTime, type })
       .then(console.log)
       .catch(console.error);
-  };
+  };  
 
   const createScheduleOnServer = (event) => {
     ScheduleService.createSchedule(event)
@@ -244,7 +291,9 @@ export function ScheduleMaintenance() {
   };
 
   return (
-    <div style={{ paddingTop: "70px", paddingRight: "700px", paddingLeft: "0" }}>
+    <div
+      style={{ paddingTop: "70px", paddingRight: "700px", paddingLeft: "0" }}
+    >
       {userRole === "1" && (
         <div style={{ marginBottom: "20px" }}>
           <label>Seleccionar Sucursal:</label>

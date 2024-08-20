@@ -24,7 +24,6 @@ class ScheduleService {
       });
   }
 
-  // Actualizar un horario existente
   updateSchedule(eventId, data) {
     if (!eventId) {
       console.error("Event ID is undefined for update");
@@ -37,6 +36,7 @@ class ScheduleService {
         throw error;
       });
   }
+
   
 
   // Eliminar un horario
