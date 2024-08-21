@@ -2,7 +2,7 @@ import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button, Grid, Typography } from "@mui/material";
+import { TextField, Button, Grid, Typography, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import InvoiceService from "../../services/InvoiceService";
 import debounce from "lodash/debounce";
@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
+import StoreServices from "../../services/StoreServices";
 
 const SearchContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -30,7 +31,7 @@ const columns = [
   { field: "Fecha", headerName: "Fecha", width: 130 },
   { field: "Nombre", headerName: "Nombre", width: 130 },
   { field: "Total", headerName: "Total", width: 130 },
-  {field: "Tipo", headerName: "Tipo de Factura",width: 130 }
+  { field: "Tipo", headerName: "Tipo de Factura", width: 130 }
 ];
 
 export function InvoiceList() {
@@ -43,11 +44,25 @@ export function InvoiceList() {
   const [selectedDate, setSelectedDate] = useState(null);
   const navigate = useNavigate();
   const storeId = localStorage.getItem("selectedStoreId");
+  const userRole = parseInt(localStorage.getItem("userRole")); 
+  const userEmail = localStorage.getItem("userEmail");
 
+  
   const fetchInvoices = useCallback((storeId, query = "", date = null) => {
     const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : null;
-    setLoaded(false); // Ensure loading state is managed
-    InvoiceService.getInvoiceListByStore(storeId, query, formattedDate)
+
+    setLoaded(false);
+  
+    // Decidir cuál método de InvoiceService usar según el roleId
+    let fetchPromise;
+  
+    if (userRole === 3) {
+      fetchPromise = InvoiceService.getInvoiceListByUser(userEmail, query);
+    } else {
+      fetchPromise = InvoiceService.getInvoiceListByStore(storeId, query);
+    }
+  
+    fetchPromise
       .then((response) => {
         if (response && response.results) {
           setData(response.results);
@@ -93,7 +108,7 @@ export function InvoiceList() {
 
   const handleDateChange = useCallback((date) => {
     setSelectedDate(date);
-    fetchInvoices(storeId, search, date); // Llamar con la fecha seleccionada
+    fetchInvoices(storeId, search, date);
   }, [storeId, search, fetchInvoices]);
 
   const handleReset = useCallback(() => {
@@ -116,23 +131,27 @@ export function InvoiceList() {
       <Typography variant="h2" align="center" gutterBottom marginBottom={8}>
         Facturas
       </Typography>
-      <SearchContainer>
-        <SearchInput
-          label="Buscar por nombre del cliente"
-          value={search}
-          onChange={handleSearchChange}
-          variant="outlined"
-          fullWidth
-          margin="normal"
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleReset}
-        >
-          Limpiar
-        </Button>
-      </SearchContainer>
+      
+      {userRole !== 3 && ( // Hide search bar if userRole is 3
+        <SearchContainer>
+          <SearchInput
+            label="Buscar por nombre del cliente"
+            value={search}
+            onChange={handleSearchChange}
+            variant="outlined"
+            fullWidth
+            margin="normal"
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleReset}
+          >
+            Limpiar
+          </Button>
+        </SearchContainer>
+      )}
+      
       <Grid container justifyContent="center" style={{ marginBottom: "20px" }}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
@@ -144,6 +163,7 @@ export function InvoiceList() {
           />
         </LocalizationProvider>
       </Grid>
+      
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={data}
@@ -187,9 +207,12 @@ export function InvoiceList() {
           }}
         />
       </div>
-      <Button variant="contained" onClick={handleShowReporte} style={{ margin: "20px" }}>
-        {showReporte ? "Ocultar Reporte" : "Mostrar Reporte por precios"}
-      </Button>
+      
+      {userRole !== 3 && ( // Hide report button for role 3
+        <Button variant="contained" onClick={handleShowReporte} style={{ margin: "20px" }}>
+          {showReporte ? "Ocultar Reporte" : "Mostrar Reporte por precios"}
+        </Button>
+      )}
 
       {showReporte && <ReportePastel />}
     </>

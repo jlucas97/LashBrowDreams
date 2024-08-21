@@ -16,13 +16,18 @@ class ScheduleService {
 
   // Crear un nuevo horario
   createSchedule(schedule) {
-    return axios.post(`${BASE_URL}/schedule/create`, schedule)
-      .then(response => response.data)
+    console.log("Enviando datos al servidor:", schedule);
+    return axios.post(`${BASE_URL}/schedule/createSchedule`, schedule)  // Cambia a /schedule/createSchedule
+      .then(response => {
+        console.log("Respuesta del servidor:", response.data);
+        return response.data;
+      })
       .catch(error => {
         console.error("Error al crear el horario:", error);
         throw error;
       });
-  }
+}
+
 
   updateSchedule(eventId, data) {
     if (!eventId) {
@@ -41,7 +46,7 @@ class ScheduleService {
 
   // Eliminar un horario
   deleteSchedule(id) {
-    return axios.delete(`${BASE_URL}/schedule/delete/${id}`)
+    return axios.delete(`${BASE_URL}/schedule/deleteSchedule/${id}`)
       .then(response => response.data)
       .catch(error => {
         console.error("Error al eliminar el horario:", error);

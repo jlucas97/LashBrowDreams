@@ -1,10 +1,18 @@
 <?php
-class billing {
-    public function index($id) {
+class billing
+{
+    public function index($param)
+    {
         $invoiceM = new InvoiceModel;
         $query = isset($_GET['query']) ? $_GET['query'] : '';
 
-        $response = $invoiceM->getInvoiceListByStore($id, $query);
+         if (strpos($param, '@') !== false){
+            // Si el parámetro es un email, filtrar por usuario
+            $response = $invoiceM->getInvoiceListByUser($param, $query);
+        } else {
+            // Si el parámetro no es un email, asumir que es el ID de la tienda
+            $response = $invoiceM->getInvoiceListByStore($param, $query);
+        }
 
         if (isset($response) && !empty($response)) {
             $json = array(
@@ -23,7 +31,9 @@ class billing {
         );
     }
 
-    public function get($id) {
+
+    public function get($id)
+    {
         $invoiceM = new InvoiceModel;
         $response = $invoiceM->getInvoiceMasterDetail($id);
 
@@ -44,7 +54,8 @@ class billing {
         );
     }
 
-    public function create() {
+    public function create()
+    {
         $data = json_decode(file_get_contents("php://input"), true);
 
         $invoiceM = new InvoiceModel;

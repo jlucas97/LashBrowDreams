@@ -30,6 +30,31 @@ class InvoiceModel {
         }
     }
 
+    public function getInvoiceListByUser($userEmail, $query = '') {
+        try {
+            $vSQL = "SELECT i.id as ID_Factura, i.date as Fecha, u.name as Nombre, it.Total, i.type as Tipo
+                     FROM invoice as i 
+                     INNER JOIN user as u ON i.customerId = u.email
+                     INNER JOIN invoice_total as it ON i.id = it.invoiceId
+                     WHERE u.email = ?";
+    
+            $params = [$userEmail];
+    
+            if ($query) {
+                $vSQL .= " AND u.name LIKE ?";
+                $params[] = $query . '%'; // Filtrar por nombre de usuario si se proporciona un query
+            }
+    
+            $vSQL .= " ORDER BY i.id";
+            $vResult = $this->link->executeSQL($vSQL, 'obj', $params);
+    
+            return $vResult;
+        } catch (Exception $e) {
+            die('' . $e->getMessage());
+        }
+    }
+    
+
     public function getInvoiceHeading($id) {
         try {
             $vSQL = "select i.id as ID_Factura, i.date as Fecha, u.email as Correo_Electronico, u.name as Nombre,
@@ -70,15 +95,23 @@ class InvoiceModel {
         try {
             $heading = $this->getInvoiceHeading($id);
             $details = $this->getInvoiceDetailList($id);
-
-            return array(
-                'heading' => $heading,
-                'details' => $details
-            );
+    
+            if ($heading || $details) {
+                return array(
+                    'heading' => $heading ? $heading : 'No hay encabezado disponible',
+                    'details' => $details ? $details : 'No hay detalles disponibles',
+                );
+            } else {
+                return array(
+                    'heading' => null,
+                    'details' => null
+                );
+            }
         } catch (Exception $e) {
             die('' . $e->getMessage());
         }
     }
+    
 
     public function createInvoice($data) {
         $this->link->connect();

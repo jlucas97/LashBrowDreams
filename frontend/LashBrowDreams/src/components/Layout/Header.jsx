@@ -23,6 +23,7 @@ const routes = {
   Productos: "/product",
   Reservas: "/reservation",
   Facturación: "/billing",
+  Facturas: "/billing",
   Catálogo: "/product",
   Mantenimiento: "/maintenance",
   Gestión: "/management",
@@ -35,7 +36,7 @@ function getPagesByRole(role) {
     case 2: // Encargado
       return ["Productos", "Reservas", "Facturación"];
     case 3: // Cliente
-      return ["Productos", "Reservas"];
+      return ["Productos", "Reservas", "Facturas"];
     default:
       return ["Productos"];
   }
