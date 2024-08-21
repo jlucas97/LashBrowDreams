@@ -16,8 +16,9 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { Link, useNavigate } from "react-router-dom";
 import UserService from "../../services/UserService";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AdminDashboard from "../Consoles/AdminDashboard";
 
 const routes = {
   Productos: "/product",
@@ -63,13 +64,13 @@ function ResponsiveAppBar() {
   const [passwordInput, setPasswordInput] = useState("");
   const navigate = useNavigate();
 
-  const userRole = UserService.getRole(); 
-  const isUserLoggedIn = UserService.isLoggedIn(); 
+  let userRole = UserService.getRole();
+  const isUserLoggedIn = UserService.isLoggedIn();
   const userEmail = UserService.getUserEmail();
   const userName = UserService.getUserName();
 
-  const pages = getPagesByRole(userRole); 
-  const settings = getUserSettings(userRole); 
+  const pages = getPagesByRole(userRole);
+  const settings = getUserSettings(userRole);
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
@@ -78,35 +79,52 @@ function ResponsiveAppBar() {
   const handleLoginClick = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
+  const handleLBDClick = () => {
+    userRole = Number(userRole);
+    if (userRole === 1 || userRole === 2) {
+      navigate("/admin"); // Redirige al admin dashboard
+    } else {
+      navigate("/"); // Redirige al landing page si no es admin
+    }
+  };
+
   const handleLogin = () => {
     const storeId = localStorage.getItem("selectedStoreId");
-  
+
     UserService.login(emailInput, passwordInput, storeId)
       .then(() => {
+        const userRole = Number(UserService.getRole()); 
+
         setOpenModal(false);
         toast.success("Inicio de sesión exitoso", {
-          position: "top-right"
+          position: "top-right",
         });
-        window.location.reload();
+
+        // Redirigir según el rol del usuario
+        if (userRole === 1 || userRole === 2) {
+          window.location.href = "/admin-dashboard"; // Redirigir al dashboard del administrador
+        } else {
+          window.location.href = "/"; // Redirigir al landing page para otros roles
+        }
       })
       .catch((error) => {
+        // Manejo de errores
         if (error.response && error.response.status === 403) {
           toast.error("El usuario no pertenece a esta sucursal", {
-            position: "top-right"
+            position: "top-right",
           });
         } else if (error.response && error.response.status === 401) {
           toast.error("Credenciales inválidas", {
-            position: "top-right"
+            position: "top-right",
           });
         } else {
           toast.error("Error inesperado durante el inicio de sesión", {
-            position: "top-right"
+            position: "top-right",
           });
         }
         setOpenModal(false);
       });
   };
-  
 
   const handleLogout = () => {
     UserService.logout();
@@ -131,8 +149,7 @@ function ResponsiveAppBar() {
             <Typography
               variant="h6"
               noWrap
-              component={Link}
-              to="/"
+              onClick={handleLBDClick}
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -235,7 +252,9 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 0 }}>
               {isUserLoggedIn ? (
                 <>
-                  <Tooltip title={`Sesión iniciada como ${userName || userEmail}`}>
+                  <Tooltip
+                    title={`Sesión iniciada como ${userName || userEmail}`}
+                  >
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
                         alt={userName || userEmail}
@@ -268,9 +287,7 @@ function ResponsiveAppBar() {
                             : handleCloseUserMenu
                         }
                         component={Link}
-                        to={
-                          setting !== "Cerrar Sesión" ? routes[setting] : "#"
-                        }
+                        to={setting !== "Cerrar Sesión" ? routes[setting] : "#"}
                       >
                         <Typography textAlign="center">{setting}</Typography>
                       </MenuItem>

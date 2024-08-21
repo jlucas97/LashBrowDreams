@@ -31,6 +31,22 @@ class billing
         );
     }
 
+    public function getProformasByUser($userEmail) {
+        try {
+            // Instanciación correcta de la clase InvoiceModel
+            $invoiceM = new InvoiceModel();
+            
+            // Llamada correcta al método getProformaInvoicesByUser sin el signo de dolar delante de $invoiceM
+            $proformas = $invoiceM->getProformaInvoicesByUser($userEmail);
+            
+            // Devolver la respuesta en formato JSON
+            echo json_encode($proformas);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
+    
 
     public function get($id)
     {

@@ -10,7 +10,8 @@ const StatusCircle = ({ status }) => {
     case "Pendiente":
       color = "orange";
       break;
-    case "Cancelada":
+    case "No se presentó":  
+    case "Cancelado":
       color = "red";
       break;
     default:

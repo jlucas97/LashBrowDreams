@@ -8,12 +8,13 @@ import ReservationServices from "../../services/ReservationServices";
 import StatusCircle from "../../context/StatusCircle";
 import debounce from "lodash/debounce";
 import Button from "@mui/material/Button";
-import { Grid } from "@mui/material";
+import { Grid, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { appTheme } from "../../themes/theme";
 import { toast } from "react-toastify";
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
+import StoreServices from "../../services/StoreServices"; // Importa el servicio de sucursales
 
 const SearchContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -52,14 +53,27 @@ export function ReservationList() {
   const [search, setSearch] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [loaded, setLoaded] = useState(false);
-  
-  const navigate = useNavigate();
+  const [stores, setStores] = useState([]); // Estado para almacenar las sucursales
   const storeId = localStorage.getItem("selectedStoreId");
+  const [selectedStore, setSelectedStore] = useState(storeId); // Estado para la sucursal seleccionada
+  const navigate = useNavigate();
+  const userRole = parseInt(localStorage.getItem("userRole"));
 
-  // Simplified fetchReservations
+  const fetchStores = useCallback(() => {
+    StoreServices.getStores()
+      .then((response) => {
+        setStores(response.data.results);
+      })
+      .catch((error) => {
+        console.error("Error al obtener sucursales:", error);
+        setStores([]); // Establecer un array vacío en caso de error
+        toast.error("Error al cargar las sucursales");
+      });
+  }, []);
+
   const fetchReservations = useCallback((storeId, customerId = "", date = null) => {
     const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : null;
-    setLoaded(false); // Ensure loading state is managed
+    setLoaded(false);
     ReservationServices.getReservationsByStoreAndUser(storeId, null, customerId, formattedDate)
       .then((response) => {
         if (response && response.results && response.results.length > 0) {
@@ -75,17 +89,30 @@ export function ReservationList() {
         toast.error("Error al obtener las reservaciones");
       })
       .finally(() => {
-        setLoaded(true); // Final loading state
+        setLoaded(true);
       });
   }, []);
 
   useEffect(() => {
     if (storeId) {
-      fetchReservations(storeId, search, selectedDate);
+      fetchReservations(selectedStore, search, selectedDate);
     } else {
       setLoaded(true);
     }
-  }, [storeId, search, selectedDate, fetchReservations]);
+  }, [storeId, search, selectedDate, selectedStore, fetchReservations]);
+
+  useEffect(() => {
+    if (userRole === 1) {
+      fetchStores(); // Cargar sucursales solo si el userRole es 1
+    }
+  }, [userRole, fetchStores]);
+
+  const handleStoreChange = useCallback((event) => {
+    const selectedStoreId = event.target.value;
+    setSelectedStore(selectedStoreId);
+    localStorage.setItem("selectedStoreId", selectedStoreId); // Actualizar el localStorage
+    fetchReservations(selectedStoreId, search, selectedDate);
+  }, [search, selectedDate, fetchReservations]);
 
   const handleSearchChange = useCallback((event) => {
     const query = event.target.value;
@@ -95,19 +122,46 @@ export function ReservationList() {
 
   const handleDateChange = useCallback((date) => {
     setSelectedDate(date);
-    fetchReservations(storeId, search, date);
-  }, [storeId, search, fetchReservations]);
+    fetchReservations(selectedStore, search, date);
+  }, [selectedStore, search, fetchReservations]);
 
   const handleReset = useCallback(() => {
     setSearch("");
     setSelectedDate(null);
-    fetchReservations(storeId);
-  }, [storeId, fetchReservations]);
+    fetchReservations(selectedStore);
+  }, [selectedStore, fetchReservations]);
 
-  const debouncedSearch = useCallback(debounce((query, date) => fetchReservations(storeId, query, date), 300), [storeId, fetchReservations]);
+  const debouncedSearch = useCallback(debounce((query, date) => fetchReservations(selectedStore, query, date), 300), [selectedStore, fetchReservations]);
 
   return (
     <>
+      {userRole === 1 && (
+        <Grid
+          container
+          justifyContent="center"
+          style={{ marginBottom: "20px" }}
+        >
+          <FormControl variant="outlined" style={{ minWidth: 200 }}>
+            <InputLabel>Sucursal</InputLabel>
+            <Select
+              value={selectedStore}
+              onChange={handleStoreChange}
+              label="Sucursal"
+            >
+              {Array.isArray(stores) && stores.length > 0 ? (
+                stores.map((store) => (
+                  <MenuItem key={store.id} value={store.id}>
+                    {store.name}
+                  </MenuItem>
+                ))
+              ) : (
+                <MenuItem disabled>No hay sucursales disponibles</MenuItem>
+              )}
+            </Select>
+          </FormControl>
+        </Grid>
+      )}
+
       <SearchContainer>
         <SearchInput
           label="Buscar por cliente"
@@ -125,6 +179,7 @@ export function ReservationList() {
           Limpiar
         </Button>
       </SearchContainer>
+
       <Grid container justifyContent="center" style={{ marginBottom: "20px" }}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
@@ -135,15 +190,8 @@ export function ReservationList() {
             renderInput={(params) => <TextField {...params} helperText={null} />}
           />
         </LocalizationProvider>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleReset}
-          style= {{marginLeft: "40px", marginTop:"10px", height:"50%", display: "flex", alignItems: "center"}}
-        >
-          Limpiar
-        </Button>
       </Grid>
+
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={data}

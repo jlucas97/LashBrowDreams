@@ -54,6 +54,22 @@ class InvoiceModel {
         }
     }
     
+    public function getProformaInvoicesByUser($userEmail, $query = '') {
+        try {
+            // Reutiliza la función existente para obtener todas las facturas del usuario
+            $invoices = $this->getInvoiceListByUser($userEmail, $query);
+    
+            // Filtra las facturas que son de tipo 'Proforma'
+            $proformaInvoices = array_filter($invoices, function($invoice) {
+                return $invoice->Tipo === 'Proforma';
+            });
+    
+            return $proformaInvoices;
+        } catch (Exception $e) {
+            die('' . $e->getMessage());
+        }
+    }
+    
 
     public function getInvoiceHeading($id) {
         try {

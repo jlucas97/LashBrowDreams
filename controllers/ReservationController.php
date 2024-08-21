@@ -87,44 +87,59 @@ class reservation {
     private function createProforma($reservationId, $data) {
         $conn = new MySqlConnect();
         $conn->connect();
-
-        // Insertar la proforma en la tabla `invoice`
-        $sqlInvoice = "INSERT INTO `invoice` (`date`, `time`, `customerId`, `storeId`, `type`)
-                       VALUES (?, ?, ?, ?, 'Proforma')";
-        $paramsInvoice = [$data['date'], $data['time'], $data['customerId'], $data['storeId']];
-        $invoiceId = $conn->executeSQL_DML_last($sqlInvoice, $paramsInvoice);
-
-        // Insertar el detalle de la proforma en la tabla `invoice_detail`
-        $sqlInvoiceDetail = "INSERT INTO `invoice_detail` (`invoiceId`, `serviceId`, `quantity`, `total`)
-                             VALUES (?, ?, ?, ?)";
-        
-        $serviceId = $data['serviceId'];
-        $quantity = 1; // Asumiendo que es 1 servicio por reserva
-        $servicePrice = $this->getServicePrice($serviceId); // Obtener el precio del servicio
-
-        $paramsInvoiceDetail = [$invoiceId, $serviceId, $quantity, $servicePrice * $quantity];
-        $conn->executeSQL_DML($sqlInvoiceDetail, $paramsInvoiceDetail);
-
-        // Calcular subtotal, impuesto (13%) y total
-        $subtotal = $servicePrice * $quantity;
-        $taxAmount = $subtotal * 0.13;
-        $total = $subtotal + $taxAmount;
-
-        // Insertar el total en la tabla `invoice_total`
-        $sqlInvoiceTotal = "INSERT INTO `invoice_total` (`invoiceId`, `subtotal`, `taxAmount`, `total`)
-                            VALUES (?, ?, ?, ?)";
-        $paramsInvoiceTotal = [$invoiceId, $subtotal, $taxAmount, $total];
-        $conn->executeSQL_DML($sqlInvoiceTotal, $paramsInvoiceTotal);
-
-        $conn->close();
+    
+        try {
+            // Insertar la proforma en la tabla `invoice`
+            $sqlInvoice = "INSERT INTO `invoice` (`date`, `time`, `customerId`, `storeId`, `type`)
+                           VALUES (?, ?, ?, ?, 'Proforma')";
+            $paramsInvoice = [$data['date'], $data['time'], $data['customerId'], $data['storeId']];
+            $invoiceId = $conn->executeSQL_DML_last($sqlInvoice, $paramsInvoice);
+    
+            // Obtener el precio del servicio
+            $servicePrice = $this->getServicePrice($data['serviceId']);
+            if (!$servicePrice) {
+                throw new Exception("No se pudo obtener el precio del servicio con ID: " . $data['serviceId']);
+            }
+    
+            // Insertar el detalle de la proforma en la tabla `invoice_detail`
+            $sqlInvoiceDetail = "INSERT INTO `invoice_detail` (`invoiceId`, `serviceId`, `quantity`, `total`)
+                                 VALUES (?, ?, ?, ?)";
+            $quantity = 1; // Asumiendo que es 1 servicio por reserva
+            $paramsInvoiceDetail = [$invoiceId, $data['serviceId'], $quantity, $servicePrice * $quantity];
+            $conn->executeSQL_DML($sqlInvoiceDetail, $paramsInvoiceDetail);
+    
+            // Calcular subtotal, impuesto (13%) y total
+            $subtotal = $servicePrice * $quantity;
+            $taxAmount = $subtotal * 0.13;
+            $total = $subtotal + $taxAmount;
+    
+            // Insertar el total en la tabla `invoice_total`
+            $sqlInvoiceTotal = "INSERT INTO `invoice_total` (`invoiceId`, `subtotal`, `taxAmount`, `total`)
+                                VALUES (?, ?, ?, ?)";
+            $paramsInvoiceTotal = [$invoiceId, $subtotal, $taxAmount, $total];
+            $conn->executeSQL_DML($sqlInvoiceTotal, $paramsInvoiceTotal);
+    
+        } catch (Exception $e) {
+            //throw new Exception("Error al crear la proforma: " . $e->getMessage());
+        } finally {
+            $conn->close();
+        }
     }
+    
 
     private function getServicePrice($serviceId) {
-        // Obtener el precio del servicio desde la base de datos
         $conn = new MySqlConnect();
+        $conn->connect();
+    
         $sql = "SELECT price FROM services WHERE id = ?";
         $result = $conn->executeSQL($sql, "num", [$serviceId]);
-        return $result[0][0]; // Retorna el precio
+    
+        if ($result && isset($result[0][0])) {
+            return $result[0][0]; // Retorna el precio
+        } else {
+            throw new Exception("El precio del servicio no se encontró para el ID: $serviceId");
+        }
     }
+    
 
 }

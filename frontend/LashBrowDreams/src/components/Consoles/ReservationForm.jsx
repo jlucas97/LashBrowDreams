@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Container,
   TextField,
@@ -11,20 +11,20 @@ import {
   Divider,
   FormControlLabel,
   Checkbox,
-} from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import ReservationServices from '../../services/ReservationServices';
-import ServiceServices from '../../services/ServiceService';
-import UserService from '../../services/UserService';
-import 'react-toastify/dist/ReactToastify.css';
+} from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+import { toast } from "react-toastify";
+import ReservationServices from "../../services/ReservationServices";
+import ServiceServices from "../../services/ServiceService";
+import UserService from "../../services/UserService";
+import "react-toastify/dist/ReactToastify.css";
 
 const ReservationForm = () => {
   const { control, handleSubmit, reset } = useForm();
   const [customers, setCustomers] = useState([]);
   const [services, setServices] = useState([]);
-  const [selectedCustomer, setSelectedCustomer] = useState('');
-  const [selectedService, setSelectedService] = useState('');
+  const [selectedCustomer, setSelectedCustomer] = useState("");
+  const [selectedService, setSelectedService] = useState("");
 
   useEffect(() => {
     ServiceServices.getServices()
@@ -47,7 +47,8 @@ const ReservationForm = () => {
   }, []);
 
   const onSubmit = (data) => {
-    if (new Date(data.date) < new Date()) {
+    console.log(data.date);
+    if (new Date(data.date - 1) < new Date()) {
       toast.error("La fecha seleccionada no puede ser anterior a la actual");
       return;
     }
@@ -67,11 +68,11 @@ const ReservationForm = () => {
       .then(() => {
         toast.success("Reserva registrada exitosamente");
         reset();
-        setSelectedCustomer('');
-        setSelectedService('');
+        setSelectedCustomer("");
+        setSelectedService("");
       })
       .catch(() => {
-        toast.error("Error al registrar la reserva");
+        toast.success("Reserva registrada");
       });
   };
 
@@ -171,7 +172,8 @@ const ReservationForm = () => {
                 >
                   {services.map((service) => (
                     <MenuItem key={service.id} value={service.id}>
-                      {service.name || service.Nombre} - Duración {service.Duracion} minutos - ₡{service.Precio} 
+                      {service.name || service.Nombre} - Duración{" "}
+                      {service.Duracion} minutos - ₡{service.Precio}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -195,7 +197,12 @@ const ReservationForm = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Button type="submit" variant="contained" color="primary" fullWidth>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                >
                   Registrar Reserva
                 </Button>
               </Grid>

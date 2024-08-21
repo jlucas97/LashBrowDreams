@@ -18,6 +18,7 @@ import { Management } from "./components/Consoles/Management.jsx";
 import ReservationForm from "./components/Consoles/ReservationForm.jsx";
 import InvoiceForm from "./components/Consoles/InvoiceForm.jsx";
 import { ScheduleMaintenance } from "./components/Consoles/ScheduleMaintenance.jsx";
+import AdminDashboard from "./components/Consoles/AdminDashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/admin",
+        element: <AdminDashboard/>,
       },
       {
         path: "product",
